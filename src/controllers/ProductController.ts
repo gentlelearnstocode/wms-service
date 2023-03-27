@@ -1,6 +1,7 @@
-import Product from '../models/Product';
-import { Request, Response } from 'express';
+import { Product } from '../models';
+import { NextFunction, Request, Response } from 'express';
 
+import { AppError } from '../utils/AppError';
 import STATUS from '../constants/Status';
 
 export const createProduct = async (req: Request, res: Response) => {
@@ -24,13 +25,16 @@ export const getAllProducts = async (req: Request, res: Response) => {
   });
 };
 
-export const getProduct = async (req: Request, res: Response) => {
+export const getProduct = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const product = await Product.findById(req.params.id);
   if (!product) {
-    return res.status(404).json({
-      status: STATUS.FAIL,
-      message: 'Product not found',
-    });
+    return next(
+      new AppError(`No road found with this ID: ${req.params.id}`, 404)
+    );
   }
   res.status(200).json({
     status: STATUS.SUCCESS,
