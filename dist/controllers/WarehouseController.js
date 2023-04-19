@@ -39,65 +39,67 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getProduct = exports.getAllProducts = exports.createProduct = void 0;
+exports.getWarehouse = exports.getAllWarehouses = exports.createWarehouse = void 0;
 var models_1 = require("../models");
-var AppError_1 = require("../utils/AppError");
 var Status_1 = __importDefault(require("../constants/Status"));
-var createProduct = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var product;
+var createWarehouse = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var warehouse;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, models_1.Product.create(req.body)];
+            case 0: return [4 /*yield*/, models_1.Warehouse.create(req.body)];
             case 1:
-                product = _a.sent();
+                warehouse = _a.sent();
                 res.status(201).json({
                     status: Status_1.default.SUCCESS,
                     data: {
-                        product: product,
+                        warehouse: warehouse,
                     },
                 });
                 return [2 /*return*/];
         }
     });
 }); };
-exports.createProduct = createProduct;
-var getAllProducts = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var products;
+exports.createWarehouse = createWarehouse;
+var getAllWarehouses = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var warehouses;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, models_1.Product.find()];
+            case 0: return [4 /*yield*/, models_1.Warehouse.find()];
             case 1:
-                products = _a.sent();
+                warehouses = _a.sent();
                 res.status(200).json({
                     status: Status_1.default.SUCCESS,
                     data: {
-                        result: products.length,
-                        products: products,
+                        result: warehouses.length,
+                        warehouses: warehouses,
                     },
                 });
                 return [2 /*return*/];
         }
     });
 }); };
-exports.getAllProducts = getAllProducts;
-var getProduct = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var product;
+exports.getAllWarehouses = getAllWarehouses;
+var getWarehouse = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var warehouse, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, models_1.Product.findById(req.params.id)];
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, models_1.Warehouse.findById(req.params.id)];
             case 1:
-                product = _a.sent();
-                if (!product) {
-                    return [2 /*return*/, next(new AppError_1.AppError("No road found with this ID: ".concat(req.params.id), 404))];
-                }
+                warehouse = _a.sent();
                 res.status(200).json({
                     status: Status_1.default.SUCCESS,
                     data: {
-                        product: product,
+                        warehouse: warehouse,
                     },
                 });
-                return [2 /*return*/];
+                return [3 /*break*/, 3];
+            case 2:
+                error_1 = _a.sent();
+                return [2 /*return*/, next(error_1)];
+            case 3: return [2 /*return*/];
         }
     });
 }); };
-exports.getProduct = getProduct;
+exports.getWarehouse = getWarehouse;

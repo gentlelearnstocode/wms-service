@@ -25,13 +25,14 @@ var AppError = /** @class */ (function (_super) {
     function AppError(message, statusCode) {
         var _newTarget = this.constructor;
         var _this = _super.call(this, message) || this;
+        _this.statusCode = statusCode;
         Object.setPrototypeOf(_this, _newTarget.prototype);
         _this.statusCode = statusCode;
         _this.status = "".concat(statusCode).startsWith('4')
             ? Status_1.default.FAIL
             : Status_1.default.SUCCESS;
         _this.isOperational = true;
-        Error.captureStackTrace(_this);
+        Error.captureStackTrace(_this, _this.constructor);
         return _this;
     }
     return AppError;

@@ -3,12 +3,17 @@ import { config } from 'dotenv';
 import express, { Application } from 'express';
 import mongoose, { ConnectOptions } from 'mongoose';
 import morgan from 'morgan';
+import cors from 'cors';
 //Local imports
-import { ProductRoutes, WarehouseRoutes, UserRoutes } from './routes';
+import {
+  ProductRoutes,
+  WarehouseRoutes,
+  UserRoutes,
+  AuthRoutes,
+} from './routes';
 import { ErrorController } from './controllers/ErrorController';
 import { AppError } from './utils/AppError';
 import MainRoutes from './constants/MainRoutes';
-import { verifyToken } from './middlewares';
 //Config
 config({ path: '.env' });
 const app: Application = express();
@@ -39,9 +44,12 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(cors());
+
 app.use(MainRoutes.USERS, UserRoutes);
 app.use(MainRoutes.WAREHOUSES, WarehouseRoutes);
 app.use(MainRoutes.PRODUCTS, ProductRoutes);
+app.use(MainRoutes.AUTH, AuthRoutes);
 
 //Global error handler
 app.all('*', (req, res, next) => {

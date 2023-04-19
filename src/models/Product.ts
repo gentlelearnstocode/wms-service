@@ -3,15 +3,11 @@ import mongoose from 'mongoose';
 const schema = new mongoose.Schema({
   name: {
     type: String,
-    require: [true, 'Product must have a name'],
+    required: [true, 'Product must have a name'],
   },
   price: {
     type: Number,
-    require: [true, 'Product must have price'],
-  },
-  quantity: {
-    type: Number,
-    require: [true, 'Product must have quanity'],
+    required: [true, 'Product must have price'],
   },
   type: {
     type: String,
@@ -25,9 +21,21 @@ const schema = new mongoose.Schema({
     default: Date.now(),
     select: false,
   },
+  warehouse: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Warehouse',
+      required: [
+        true,
+        'A newly created product must belong to at least one warehouse',
+      ],
+    },
+  ],
   imageUrl: {
     type: String,
-    require: true,
+    required: true,
+    default:
+      'https://www.ikea.com/sg/en/images/products/ikea-365-ihopparlig-wooden-chopping-board__0732009_PE729202_S5.JPG?f=s',
   },
 });
 

@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
+import Warehouse from './Warehouse';
 import bcrypt from 'bcrypt';
 
 const schema = new mongoose.Schema({
@@ -18,18 +19,19 @@ const schema = new mongoose.Schema({
       values: ['admin', 'manager', 'staff'],
       message: 'User role must be valid',
     },
-    default: 'STAFF',
+    default: 'staff',
     required: [true, 'User must have a role'],
   },
-  // warehouse: {
-  //   type: String,
-  //   require: [true, 'User must have a warehouse'],
-  // },
   password: {
     type: String,
     required: [true, 'User must have a password'],
     minlength: 8,
     select: false,
+  },
+  warehouse: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Warehouse',
+    require: [true, 'A user must belong to at least one warehouse'],
   },
   createdAt: {
     type: Date,

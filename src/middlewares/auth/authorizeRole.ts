@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
+
 import { AppError } from '../../utils';
+import Message from '../../constants/Message';
 
 const authorizeRole = (
   req: Request,
@@ -10,9 +12,7 @@ const authorizeRole = (
   if (userRole.includes(req.body.user.role)) {
     next();
   } else {
-    return next(
-      new AppError('You are not authorized to perform this action', 403)
-    );
+    return next(new AppError(Message.UNAUTHORIZED_REQUEST, 403));
   }
 };
 

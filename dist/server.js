@@ -10,9 +10,10 @@ var express_1 = __importDefault(require("express"));
 var mongoose_1 = __importDefault(require("mongoose"));
 var morgan_1 = __importDefault(require("morgan"));
 //Local imports
-var ProductRoutes_1 = __importDefault(require("./routes/ProductRoutes"));
+var routes_1 = require("./routes");
 var ErrorController_1 = require("./controllers/ErrorController");
 var AppError_1 = require("./utils/AppError");
+var MainRoutes_1 = __importDefault(require("./constants/MainRoutes"));
 //Config
 (0, dotenv_1.config)({ path: '.env' });
 var app = (0, express_1.default)();
@@ -38,7 +39,9 @@ app.use(function (req, res, next) {
     console.log('----------request body-----------', req.body);
     next();
 });
-app.use('/api/v1/products', ProductRoutes_1.default);
+app.use(MainRoutes_1.default.USERS, routes_1.UserRoutes);
+app.use(MainRoutes_1.default.WAREHOUSES, routes_1.WarehouseRoutes);
+app.use(MainRoutes_1.default.PRODUCTS, routes_1.ProductRoutes);
 //Global error handler
 app.all('*', function (req, res, next) {
     next(new AppError_1.AppError("Can't find ".concat(req.originalUrl, " on this server"), 404));

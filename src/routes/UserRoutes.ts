@@ -4,7 +4,6 @@ import {
   getAllUsers,
   getUser,
   createUser,
-  signInUser,
 } from '../controllers/UserController';
 
 const UserRoutes = Router();
@@ -12,6 +11,5 @@ const UserRoutes = Router();
 UserRoutes.route('/').get(getAllUsers);
 UserRoutes.route('/create-user').post(createUser);
 UserRoutes.route('/:id').get(getUser);
-UserRoutes.route('/sign-in').post(signInUser);
 
 export default UserRoutes;

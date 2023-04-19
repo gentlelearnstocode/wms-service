@@ -31,7 +31,7 @@ export const getWarehouse = async (
   next: NextFunction
 ) => {
   try {
-    const warehouse = await Warehouse.findById(req.params.id);
+    const warehouse = await Warehouse.find({ _id: req.params.id });
     res.status(200).json({
       status: STATUS.SUCCESS,
       data: {

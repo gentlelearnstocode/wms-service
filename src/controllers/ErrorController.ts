@@ -1,6 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 
 import { AppError } from '../utils/AppError';
+import Message from '../constants/Message';
+import ERROR from '../constants/Error';
+import STATUS from '../constants/Status';
 
 const sendErrorDev = (err: any, res: Response) => {
   res.status(err.statusCode).json({
@@ -18,10 +21,9 @@ const sendErrorProd = (err: any, res: Response) => {
       message: err.message,
     });
   } else {
-    console.error('ERROR', err);
     res.status(500).json({
-      status: 'error',
-      message: 'Something went wrong',
+      status: STATUS.ERROR,
+      message: Message.INTERNAL_SERVER_ERROR,
     });
   }
 };
@@ -56,9 +58,9 @@ export const ErrorController = (
     sendErrorDev(err, res);
   } else if (process.env.NODE_ENV === 'production') {
     let error = { ...err };
-    if (error.name === 'CastError') error = castErrorHandler(error, res);
+    if (error.name === ERROR.CAST_ERROR) error = castErrorHandler(error, res);
     if (error.code === 11000) error = duplicateErrorHandler(error, res);
-    if (error.name === 'ValidationError')
+    if (error.name === ERROR.VALIDATION_ERROR)
       error = ValidationErrorHandler(error, res);
     sendErrorProd(error, res);
   }
