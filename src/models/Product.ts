@@ -1,6 +1,15 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema, Types, Document, Date } from 'mongoose';
 
-const schema = new mongoose.Schema({
+export interface ProductDoc extends Document {
+  name: string;
+  price: number;
+  type: string;
+  createdAt: Date;
+  warehouse: Types.ObjectId[];
+  imageUrl: string;
+}
+
+const schema = new Schema<ProductDoc>({
   name: {
     type: String,
     required: [true, 'Product must have a name'],
@@ -23,12 +32,9 @@ const schema = new mongoose.Schema({
   },
   warehouse: [
     {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Types.ObjectId,
       ref: 'Warehouse',
-      required: [
-        true,
-        'A newly created product must belong to at least one warehouse',
-      ],
+      required: [true, 'A newly created product must belong to at least one warehouse'],
     },
   ],
   imageUrl: {
@@ -39,6 +45,6 @@ const schema = new mongoose.Schema({
   },
 });
 
-const Product = mongoose.model('Product', schema);
+const Product = mongoose.model<ProductDoc>('Product', schema);
 
 export default Product;

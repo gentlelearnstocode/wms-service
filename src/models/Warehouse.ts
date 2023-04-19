@@ -1,7 +1,13 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema, Document, Date } from 'mongoose';
+
+export interface WarehouseDoc extends Document {
+  name: string;
+  address: string;
+  createdAt: Date;
+}
 
 // Create mongoose schema for warehouse database model
-const schema = new mongoose.Schema({
+const schema = new Schema<WarehouseDoc>({
   name: {
     type: String,
     required: [true, 'Warehouse must have a name'],
@@ -16,6 +22,6 @@ const schema = new mongoose.Schema({
   },
 });
 
-const Warehouse = mongoose.model('Warehouse', schema);
+const Warehouse = mongoose.model<WarehouseDoc>('Warehouse', schema);
 
 export default Warehouse;

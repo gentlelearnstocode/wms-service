@@ -1,9 +1,15 @@
-import mongoose from 'mongoose';
+import mongoose, { Date, Schema, Types, Document } from 'mongoose';
 import validator from 'validator';
-import Warehouse from './Warehouse';
-import bcrypt from 'bcrypt';
 
-const schema = new mongoose.Schema({
+export interface UserDoc extends Document {
+  email: string;
+  role: string;
+  password: string;
+  warehouse: Types.ObjectId;
+  createdAt: Date;
+}
+
+const schema = new Schema<UserDoc>({
   //create mongoose schema for user database model
   email: {
     type: String,
@@ -29,7 +35,7 @@ const schema = new mongoose.Schema({
     select: false,
   },
   warehouse: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'Warehouse',
     require: [true, 'A user must belong to at least one warehouse'],
   },
@@ -48,6 +54,6 @@ const schema = new mongoose.Schema({
 //   }
 // });
 
-const User = mongoose.model('User', schema);
+const User = mongoose.model<UserDoc>('User', schema);
 
 export default User;
