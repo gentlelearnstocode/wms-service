@@ -7,11 +7,7 @@ import Message from '../constants/Message';
 import STATUS from '../constants/Status';
 import { jwtGenerator } from '../utils';
 
-export const signInUser = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const signInUser = async (req: Request, res: Response, next: NextFunction) => {
   const { email, password } = req.body;
   if (!email || !password) {
     return next(new AppError(Message.PROVIDE_EMAIL_AND_PASSWORD, 400));

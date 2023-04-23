@@ -6,14 +6,9 @@ import STATUS from '../constants/Status';
 import { AppError, jwtGenerator } from '../utils';
 import Message from '../constants/Message';
 
-export const createUser = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const createUser = async (req: Request, res: Response, next: NextFunction) => {
   if (!req.body.email) return next(new AppError(Message.PROVIDE_EMAIL, 400));
-  if (!req.body.password)
-    return next(new AppError(Message.PROVIDE_PASSWORD, 400));
+  if (!req.body.password) return next(new AppError(Message.PROVIDE_PASSWORD, 400));
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 12);
     const user = await User.create({

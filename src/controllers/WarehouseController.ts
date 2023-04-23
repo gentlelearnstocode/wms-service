@@ -6,12 +6,16 @@ import { catchAsync } from '../utils/catchAsync';
 
 export const createWarehouse = async (req: Request, res: Response) => {
   const warehouse = await Warehouse.create(req.body);
-  res.status(201).json({
-    status: STATUS.SUCCESS,
-    data: {
-      warehouse,
-    },
-  });
+  try {
+    res.status(201).json({
+      status: STATUS.SUCCESS,
+      data: {
+        warehouse,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const getAllWarehouses = async (req: Request, res: Response) => {
@@ -25,11 +29,7 @@ export const getAllWarehouses = async (req: Request, res: Response) => {
   });
 };
 
-export const getWarehouse = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const getWarehouse = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const warehouse = await Warehouse.find({ _id: req.params.id });
     res.status(200).json({

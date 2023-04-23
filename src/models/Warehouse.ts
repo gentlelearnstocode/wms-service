@@ -1,9 +1,9 @@
 import mongoose, { Schema, Document, Date } from 'mongoose';
-
 export interface WarehouseDoc extends Document {
   name: string;
   address: string;
   createdAt: Date;
+  // warehouseSequence: string;
 }
 
 // Create mongoose schema for warehouse database model

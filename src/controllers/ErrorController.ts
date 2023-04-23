@@ -45,12 +45,7 @@ const ValidationErrorHandler = (err: any, res: Response) => {
   return new AppError(message, 400);
 };
 
-export const ErrorController = (
-  err: any,
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const ErrorController = (err: any, req: Request, res: Response, next: NextFunction) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
 
@@ -60,8 +55,7 @@ export const ErrorController = (
     let error = { ...err };
     if (error.name === ERROR.CAST_ERROR) error = castErrorHandler(error, res);
     if (error.code === 11000) error = duplicateErrorHandler(error, res);
-    if (error.name === ERROR.VALIDATION_ERROR)
-      error = ValidationErrorHandler(error, res);
+    if (error.name === ERROR.VALIDATION_ERROR) error = ValidationErrorHandler(error, res);
     sendErrorProd(error, res);
   }
 };

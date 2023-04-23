@@ -11,9 +11,7 @@ export class AppError extends Error {
     Object.setPrototypeOf(this, new.target.prototype);
 
     this.statusCode = statusCode;
-    this.status = `${statusCode}`.startsWith('4')
-      ? STATUS.FAIL
-      : STATUS.SUCCESS;
+    this.status = `${statusCode}`.startsWith('4') ? STATUS.FAIL : STATUS.SUCCESS;
     this.isOperational = true;
 
     Error.captureStackTrace(this, this.constructor);

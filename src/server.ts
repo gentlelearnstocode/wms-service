@@ -1,19 +1,14 @@
 //Third party imports
 import { config } from 'dotenv';
 import express, { Application } from 'express';
-import mongoose, { ConnectOptions } from 'mongoose';
 import morgan from 'morgan';
 import cors from 'cors';
 //Local imports
-import {
-  ProductRoutes,
-  WarehouseRoutes,
-  UserRoutes,
-  AuthRoutes,
-} from './routes';
+import { ProductRoutes, WarehouseRoutes, UserRoutes, AuthRoutes } from './routes';
 import { ErrorController } from './controllers/ErrorController';
 import { AppError } from './utils/AppError';
 import MainRoutes from './constants/MainRoutes';
+import { Connection } from './db/connection';
 //Config
 config({ path: '.env' });
 const app: Application = express();
@@ -22,21 +17,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 //Database
-const DB = process.env.DATABASE?.replace(
-  '<PASSWORD>',
-  process.env.DATABASE_PASSWORD!
-);
-mongoose
-  .connect(DB!, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  } as ConnectOptions)
-  .then(() => {
-    console.log('Database connected successfully');
-  })
-  .catch((err) => {
-    console.log(`Database connection failed: ${err}`);
-  });
+const databaseURL = process.env.DATABASE?.replace('<PASSWORD>', process.env.DATABASE_PASSWORD!) || '';
+const start = async () => await Connection.connectDB(databaseURL);
+start();
 
 //App
 app.use((req, res, next) => {
