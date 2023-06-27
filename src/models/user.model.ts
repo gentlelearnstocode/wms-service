@@ -1,7 +1,7 @@
 import mongoose, { Date, Schema, Types, Document } from 'mongoose';
 import validator from 'validator';
 
-export interface UserDoc extends Document {
+interface UserDoc extends Document {
   email: string;
   role: string;
   password: string;
@@ -54,6 +54,6 @@ const schema = new Schema<UserDoc>({
 //   }
 // });
 
-const User = mongoose.model<UserDoc>('User', schema);
+const UserModel = mongoose.model<UserDoc>('User', schema);
 
-export default User;
+export default UserModel;

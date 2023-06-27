@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import Inventory from '../models/Inventory';
+import Inventory from '../models/inventory.model';
 
 export const createInventory = async (req: Request, res: Response) => {
   const inventory = await Inventory.create(req.body);

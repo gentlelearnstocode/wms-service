@@ -1,7 +1,7 @@
 import { Response, NextFunction, Request } from 'express';
 import jwt from 'jsonwebtoken';
 
-import { User } from '../../models';
+import { UserModel } from '../../models';
 import Message from '../../constants/Message';
 
 const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
@@ -10,7 +10,7 @@ const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
     jwt.verify(token, process.env.JWT_SECRET!, async (_, authData: any) => {
       if (authData) {
         try {
-          const userData = await User.findById({ _id: authData?.id });
+          const userData = await UserModel.findById({ _id: authData?.id });
           req.body = { ...req.body, user: userData };
           next();
         } catch (error) {

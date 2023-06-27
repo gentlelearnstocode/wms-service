@@ -1,15 +1,14 @@
-import { Router } from 'express';
+import { configService } from '../configs';
 
 import {
   getAllWarehouses,
   createWarehouse,
   getWarehouse,
-} from '../controllers/WarehouseController';
+} from '../controllers/warehouse.controller';
+import { verifyToken } from '../middlewares';
 
-const WarehouseRoutes = Router();
+configService.routeGETRequest('/', [verifyToken, getAllWarehouses])
+configService.routeGETRequest('/:id', [getWarehouse])
+configService.routePOSTRequest('/create-warehouse', [verifyToken, createWarehouse])
 
-WarehouseRoutes.route('/').get(getAllWarehouses);
-WarehouseRoutes.route('/:id').get(getWarehouse);
-WarehouseRoutes.route('/create-warehouse').post(createWarehouse);
-
-export default WarehouseRoutes;
+export default configService.router

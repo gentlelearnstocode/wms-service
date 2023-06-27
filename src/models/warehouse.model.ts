@@ -1,5 +1,6 @@
 import mongoose, { Schema, Document, Date } from 'mongoose';
-export interface WarehouseDoc extends Document {
+
+interface WarehouseDoc extends Document {
   name: string;
   address: string;
   createdAt: Date;
@@ -22,6 +23,6 @@ const schema = new Schema<WarehouseDoc>({
   },
 });
 
-const Warehouse = mongoose.model<WarehouseDoc>('Warehouse', schema);
+const WarehouseModel = mongoose.model<WarehouseDoc>('Warehouse', schema);
 
-export default Warehouse;
+export default WarehouseModel

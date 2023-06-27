@@ -1,0 +1,9 @@
+### get all products
+GET http://localhost:8001/api/v1/products
+
+### get all warehouses
+GET http://localhost:8001/api/v1/warehouses
+
+###
+GET http://localhost:8001/api/v1/users
+

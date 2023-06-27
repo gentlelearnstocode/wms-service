@@ -1,15 +1,12 @@
-import { Router } from 'express';
-
 import {
   getAllUsers,
   getUser,
   createUser,
-} from '../controllers/UserController';
+} from '../controllers/user.controller';
+import { configService } from '../configs';
 
-const UserRoutes = Router();
+configService.routeGETRequest('/', [getAllUsers])
+configService.routePOSTRequest('/create-user', [createUser])
+configService.routeGETRequest('/:id', [getUser])
 
-UserRoutes.route('/').get(getAllUsers);
-UserRoutes.route('/create-user').post(createUser);
-UserRoutes.route('/:id').get(getUser);
-
-export default UserRoutes;
+export default configService.router

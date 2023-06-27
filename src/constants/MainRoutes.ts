@@ -8,6 +8,8 @@ const MainRoutes = {
   USER: '/api/v1/users/:id',
   INVENTORY: '/api/v1/inventory',
   AUTH: '/api/v1/auth',
+  SUPPLIERS: '/api/v1/suppliers',
+  SUPPLIER: '/api/v1/suppliers/:id',
 };
 
 export default MainRoutes;

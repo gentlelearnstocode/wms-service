@@ -1,9 +1,6 @@
-import { Router } from 'express';
+import { configService } from '../configs';
+import { signInUser } from '../controllers/auth.controller';
 
-import { signInUser } from '../controllers/AuthController';
+configService.router.route('/signin').post(signInUser)
 
-const AuthRoutes = Router();
-
-AuthRoutes.route('/signin').post(signInUser);
-
-export default AuthRoutes;
+export default configService.router

@@ -7,6 +7,8 @@ export interface ProductDoc extends Document {
   createdAt: Date;
   warehouse: Types.ObjectId[];
   imageUrl: string;
+  inventory: any;
+  suppliers: Types.ObjectId[];
 }
 
 const schema = new Schema<ProductDoc>({
@@ -43,8 +45,29 @@ const schema = new Schema<ProductDoc>({
     default:
       'https://www.ikea.com/sg/en/images/products/ikea-365-ihopparlig-wooden-chopping-board__0732009_PE729202_S5.JPG?f=s',
   },
+  suppliers: [
+    {
+      type: Types.ObjectId,
+      ref: 'Supplier',
+      required: [true, 'A product must have at least one supplier'],
+    },
+  ],
+  inventory: {
+    stockQuantity: {
+      type: Number,
+      default: 0,
+    },
+    outgoingQuantity: {
+      type: Number,
+      default: 0,
+    },
+    incomingQuantity: {
+      type: Number,
+      default: 0,
+    },
+  },
 });
 
-const Product = mongoose.model<ProductDoc>('Product', schema);
+const ProductModel = mongoose.model<ProductDoc>('Product', schema);
 
-export default Product;
+export default ProductModel;

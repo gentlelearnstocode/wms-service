@@ -12,7 +12,4 @@ export class APIFeatures implements IAPIFeatures {
     this.query = query;
     this.queryObj = queryObj;
   }
-  paginate(){
-    const page = this.queryObj.page || 1
-  }
 }
