@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { WarehouseModel } from '../models'
 import STATUS from '../constants/Status';
 import { warehouseService } from '../services';
 
