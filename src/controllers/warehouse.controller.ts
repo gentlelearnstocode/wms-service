@@ -16,7 +16,7 @@ export const createWarehouse = async (req: Request, res: Response, next: NextFun
 
 export const getAllWarehouses = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const warehouses = await warehouseService.findAll()
+    const warehouses = await warehouseService.findAll(req.query);
     res.status(200).json({
       status: STATUS.SUCCESS,
       data: {
