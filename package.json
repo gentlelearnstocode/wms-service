@@ -10,7 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint src/**/*.ts",
     "format": "eslint src/**/*.ts --fix",
-    "example": "tsc src/repositories/test.ts && node src/repositories/test.js"
+    "example": "tsc src/test.ts && node src/test.js"
   },
   "author": "Dao Kien Quoc",
   "license": "ISC",
@@ -22,9 +22,11 @@
     "jsonwebtoken": "^9.0.0",
     "jwt-decode": "^3.1.2",
     "lodash": "^4.17.21",
+    "moment-timezone": "^0.5.43",
     "mongoose": "^7.0.3",
     "mongoose-sequence": "^5.3.1",
-    "validator": "^13.9.0"
+    "validator": "^13.9.0",
+    "winston": "^3.9.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",

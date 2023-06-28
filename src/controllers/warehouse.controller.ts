@@ -2,10 +2,11 @@ import { NextFunction, Request, Response } from 'express';
 
 import STATUS from '../constants/Status';
 import { warehouseService } from '../services';
+import { logger } from '../utils';
 
 export const createWarehouse = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    await warehouseService.create(req.body)
+    await warehouseService.create(req.body);
     res.status(201).json({
       status: STATUS.SUCCESS,
     });
@@ -17,6 +18,7 @@ export const createWarehouse = async (req: Request, res: Response, next: NextFun
 export const getAllWarehouses = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const warehouses = await warehouseService.findAll(req.query);
+    logger.info(`body: ${JSON.stringify(req.body)} | query: ${JSON.stringify(req.query)}`);
     res.status(200).json({
       status: STATUS.SUCCESS,
       data: {
@@ -31,13 +33,12 @@ export const getAllWarehouses = async (req: Request, res: Response, next: NextFu
 
 export const getWarehouse = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const warehouse = await warehouseService.findById(req.params.id)
+    const warehouse = await warehouseService.findById(req.params.id);
     res.status(200).json({
       status: STATUS.SUCCESS,
-      data: warehouse
-    })
+      data: warehouse,
+    });
   } catch (error) {
     next(error);
   }
 };
-

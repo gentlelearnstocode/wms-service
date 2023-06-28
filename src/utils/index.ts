@@ -1,5 +1,5 @@
 import { jwtGenerator } from './jwtGenerator';
-import { catchAsync } from './catchAsync';
 import { AppError } from './AppError';
+import logger from './logger';
 
-export { jwtGenerator, catchAsync, AppError };
+export { jwtGenerator, AppError, logger };
