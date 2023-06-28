@@ -1,3 +1,0 @@
-{"level":"info","message":"body: [object Object] | query: [object Object]"}
-{"level":"info","message":"body: {\"user\":{\"_id\":\"642e9126547dd0cf2bbc2bfe\",\"email\":\"superuser@email.com\",\"role\":\"manager\",\"warehouse\":\"642280c9b6ae5ce7a6b5cac8\",\"createdAt\":\"2023-04-06T09:28:43.649Z\",\"__v\":0}} | query: {}"}
-{"@fields":{"level":"info"},"@message":"body: {\"user\":{\"_id\":\"642e9126547dd0cf2bbc2bfe\",\"email\":\"superuser@email.com\",\"role\":\"manager\",\"warehouse\":\"642280c9b6ae5ce7a6b5cac8\",\"createdAt\":\"2023-04-06T09:28:43.649Z\",\"__v\":0}} | query: {}"}

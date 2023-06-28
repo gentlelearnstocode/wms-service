@@ -1,4 +1,4 @@
-import { IUser } from "../interfaces/user.interfaces";
+import { IUser } from "../../interfaces/user.interfaces";
 import { UserRepository } from "../repositories/user.repository";
 
 export class UserService {

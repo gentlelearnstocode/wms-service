@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 
 import { supplierService } from '../services';
-import STATUS from '../constants/Status';
+import STATUS from '../../constants/Status';
 
 export const createSupplier = async (req: Request, res: Response, next: NextFunction) => {
   try {

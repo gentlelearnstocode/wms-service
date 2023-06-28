@@ -1,8 +1,8 @@
 import { Router } from 'express';
 
 import { createProduct, getAllProducts, getProduct, updateProduct } from '../controllers/product.controller';
-import { verifyToken, authorizeRole } from '../middlewares';
-import UserRoles from '../constants/UserRoles';
+import { verifyToken, authorizeRole } from '../../middlewares';
+import UserRoles from '../../constants/UserRoles';
 
 const ProductRoutes = Router();
 

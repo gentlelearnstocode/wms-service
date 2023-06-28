@@ -1,7 +1,7 @@
 import { Response, NextFunction, Request } from 'express';
 import jwt from 'jsonwebtoken';
 
-import { UserModel } from '../../models';
+import { UserModel } from '../../api/models';
 import Message from '../../constants/Message';
 
 const verifyToken = async (req: Request, res: Response, next: NextFunction) => {

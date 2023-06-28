@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { AppError } from '../utils/AppError';
-import STATUS from '../constants/Status';
+import { AppError } from '../../utils/AppError';
+import STATUS from '../../constants/Status';
 import { productService } from '../services';
 
 export const createProduct = async (req: Request, res: Response, next: NextFunction) => {

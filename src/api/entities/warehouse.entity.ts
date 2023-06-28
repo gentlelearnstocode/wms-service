@@ -1,4 +1,4 @@
-import { IWarehouse } from "../interfaces/warehouse.interfaces";
+import { IWarehouse } from "../../interfaces/warehouse.interfaces";
 
 export class WarehouseEntity implements IWarehouse {
   name: string;

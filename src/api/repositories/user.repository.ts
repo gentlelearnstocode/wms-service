@@ -1,5 +1,5 @@
 import { UserModel } from "../models"
-import { IUser } from "../interfaces/user.interfaces"
+import { IUser } from "../../interfaces/user.interfaces"
 
 export class UserRepository{
   async findById(id: string){

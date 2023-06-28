@@ -4,4 +4,4 @@ import UserRoutes from './UserRoutes';
 import AuthRoutes from './AuthRoutes';
 import SupplierRoutes from './SupplierRoutes';
 
-export { ProductRoutes, WarehouseRoutes, UserRoutes, AuthRoutes, SupplierRoutes };
+export { ProductRoutes, UserRoutes, AuthRoutes, SupplierRoutes, WarehouseRoutes };

@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 
-import { AppError } from '../utils/AppError';
-import Message from '../constants/Message';
-import ERROR from '../constants/Error';
-import STATUS from '../constants/Status';
+import { AppError } from '../../utils/AppError';
+import Message from '../../constants/Message';
+import ERROR from '../../constants/Error';
+import STATUS from '../../constants/Status';
 
 const sendErrorDev = (err: any, res: Response) => {
   res.status(err.statusCode).json({
@@ -49,6 +49,7 @@ export const ErrorController = (err: any, req: Request, res: Response, next: Nex
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
 
+  console.log('its called');
   if (process.env.NODE_ENV === 'development') {
     sendErrorDev(err, res);
   } else if (process.env.NODE_ENV === 'production') {

@@ -2,9 +2,9 @@ import { NextFunction, Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 
 import { userService } from '../services';
-import STATUS from '../constants/Status';
-import { AppError, jwtGenerator } from '../utils';
-import Message from '../constants/Message';
+import STATUS from '../../constants/Status';
+import { AppError, jwtGenerator } from '../../utils';
+import Message from '../../constants/Message';
 
 export const createUser = async (req: Request, res: Response, next: NextFunction) => {
   if (!req.body.email) return next(new AppError(Message.PROVIDE_EMAIL, 400));

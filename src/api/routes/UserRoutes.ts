@@ -3,7 +3,7 @@ import {
   getUser,
   createUser,
 } from '../controllers/user.controller';
-import { configService } from '../configs';
+import { configService } from '../../configs';
 
 configService.routeGETRequest('/', [getAllUsers])
 configService.routePOSTRequest('/create-user', [createUser])

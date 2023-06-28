@@ -1,5 +1,7 @@
 import STATUS from '../constants/Status';
+import { Middleware } from 'routing-controllers';
 
+// @Middleware({ type: 'after' })
 export class AppError extends Error {
   public readonly statusCode: number;
   public readonly status: string;

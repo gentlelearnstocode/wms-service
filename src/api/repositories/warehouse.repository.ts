@@ -1,7 +1,7 @@
-import { IWarehouse } from "../interfaces/warehouse.interfaces";
+import { IWarehouse } from "../../interfaces/warehouse.interfaces";
 import { WarehouseModel } from "../models";
-import { RepositoryAbstract } from "../abstracts";
-import { IWarehouseQuery } from "../interfaces/query.interfaces";
+import { RepositoryAbstract } from "../../abstracts";
+import { IWarehouseQuery } from "../../interfaces/query.interfaces";
 
 export class WarehouseRepository extends RepositoryAbstract {
   async findById(id: string) {
