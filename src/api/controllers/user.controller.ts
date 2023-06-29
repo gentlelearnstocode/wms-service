@@ -50,3 +50,14 @@ export const getUser = async (req: Request, res: Response) => {
     },
   });
 };
+
+export const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    await userService.delete(req.params.id);
+    res.status(200).json({
+      status: STATUS.SUCCESS,
+    });
+  } catch (e) {
+    next(e);
+  }
+};

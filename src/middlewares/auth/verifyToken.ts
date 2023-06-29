@@ -3,11 +3,12 @@ import jwt from 'jsonwebtoken';
 
 import { UserModel } from '../../api/models';
 import Message from '../../constants/Message';
+import { configService } from '../../configs';
 
 const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers['authorization']?.split(' ')[1];
   if (typeof token !== 'undefined') {
-    jwt.verify(token, process.env.JWT_SECRET!, async (_, authData: any) => {
+    jwt.verify(token, configService.JWT_SECRET, async (_, authData: any) => {
       if (authData) {
         try {
           const userData = await UserModel.findById({ _id: authData?.id });

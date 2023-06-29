@@ -1,11 +1,9 @@
 import { Router } from 'express';
-
 import { createSupplier, getAllSuppliers, getSupplier } from '../controllers/supplier.controller';
 
-const SupplierRoutes = Router();
+const router = Router();
 
-SupplierRoutes.route('/').get(getAllSuppliers);
-SupplierRoutes.route('/create-supplier').post(createSupplier);
-SupplierRoutes.route('/:id').get(getSupplier);
+router.get('/', getAllSuppliers).get('/:', getSupplier);
+router.post('/create-supplier', createSupplier);
 
-export default SupplierRoutes;
+export default router;

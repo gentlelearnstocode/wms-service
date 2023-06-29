@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 import { createProduct, getAllProducts, getProduct, updateProduct } from '../controllers/product.controller';
 import { verifyToken, authorizeRole } from '../../middlewares';
-import UserRoles from '../../constants/UserRoles';
+import UserRoles from '../../enums/UserRoles';
 
 const ProductRoutes = Router();
 

@@ -4,8 +4,8 @@ export interface IWarehouseQuery {
 }
 
 export interface IUserQuery {
-  offset?: number;
-  limit?: number;
+  offset?: string;
+  limit?: string;
 }
 
 export interface ISupplierQuery {
@@ -14,6 +14,6 @@ export interface ISupplierQuery {
 }
 
 export interface IProductQuery {
-  offset?: number;
-  limit?: number;
+  offset?: string;
+  limit?: string;
 }

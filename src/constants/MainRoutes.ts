@@ -10,6 +10,8 @@ const MainRoutes = {
   AUTH: '/api/v1/auth',
   SUPPLIERS: '/api/v1/suppliers',
   SUPPLIER: '/api/v1/suppliers/:id',
+  SALES_ORDERS: '/api/v1/sales-orders',
+  SALES_ORDER: '/api/v1/sales-orders',
 };
 
 export default MainRoutes;

@@ -1,20 +1,27 @@
-import { ProductRepository } from "../repositories/product.repository";
+import { IProductQuery } from '../../interfaces/query.interfaces';
+import { ProductRepository } from '../repositories/product.repository';
 
 export class ProductService {
-  constructor(private readonly productRepository: ProductRepository) { }
-  async findAll() {
-    return this.productRepository.findAll();
+  constructor(private readonly productRepository: ProductRepository) {
   }
 
-  async findById(id: string) {
+  public async findAll(query: IProductQuery) {
+    return this.productRepository.findAll(query);
+  }
+
+  public async findById(id: string) {
     return this.productRepository.findById(id);
   }
 
-  async create(data: any) {
+  public async create(data: any) {
     return this.productRepository.create(data);
   }
 
-  async findByIdAndUpdate(id: string, data: any) {
+  public async findByIdAndUpdate(id: string, data: any) {
     return this.productRepository.findByIdAndUpdate(id, data);
+  }
+
+  public async delete(id: string) {
+    return this.productRepository.delete(id);
   }
 }

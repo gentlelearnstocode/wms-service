@@ -1,12 +1,9 @@
-import {
-  getAllUsers,
-  getUser,
-  createUser,
-} from '../controllers/user.controller';
-import { configService } from '../../configs';
+import { createUser, deleteUser, getAllUsers, getUser } from '../controllers/user.controller';
+import { Router } from 'express';
 
-configService.routeGETRequest('/', [getAllUsers])
-configService.routePOSTRequest('/create-user', [createUser])
-configService.routeGETRequest('/:id', [getUser])
+const router = Router();
 
-export default configService.router
+router.get('/', getAllUsers).get('/:id', getUser);
+router.post('/create-user', createUser);
+router.delete('/:id', deleteUser);
+export default router;

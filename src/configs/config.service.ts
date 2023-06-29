@@ -1,10 +1,8 @@
-import { Router } from "express";
-import { config } from "dotenv";
+import { Router } from 'express';
+import { config } from 'dotenv';
 
 export class ConfigService {
-  public router: Router;
   constructor() {
-    this.router = Router();
     config({
       path: '.env',
     });
@@ -39,13 +37,5 @@ export class ConfigService {
 
   get LOCAL_TIMEZONE(): string {
     return process.env.LOCAL_TIMEZONE || '';
-  }
-
-  routeGETRequest(path: string, fn: any[]) {
-    this.router.route(path).get(...fn);
-  }
-
-  routePOSTRequest(path: string, fn: any[]) {
-    this.router.route(path).post(...fn);
   }
 }

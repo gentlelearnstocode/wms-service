@@ -1,8 +1,10 @@
-import { IUser } from "../../interfaces/user.interfaces";
-import { UserRepository } from "../repositories/user.repository";
+import { IUser } from '../../interfaces/user.interfaces';
+import { UserRepository } from '../repositories/user.repository';
 
 export class UserService {
-  constructor(private readonly userRepository: UserRepository) { }
+  constructor(private readonly userRepository: UserRepository) {
+  }
+
   async findAll() {
     return this.userRepository.findAll();
   }
@@ -17,5 +19,9 @@ export class UserService {
 
   async create(userData: IUser): Promise<any> {
     return this.create(userData);
+  }
+
+  async delete(id: string): Promise<void> {
+    return this.userRepository.delete(id);
   }
 }

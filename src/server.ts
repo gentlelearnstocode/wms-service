@@ -1,33 +1,34 @@
 import express, { Application } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
-import { useExpressServer } from 'routing-controllers';
 import 'reflect-metadata';
 
-import { ProductRoutes, UserRoutes, AuthRoutes, SupplierRoutes, WarehouseRoutes } from './api/routes';
+import { AuthRoutes, ProductRoutes, SalesOrderRoutes, SupplierRoutes, UserRoutes, WarehouseRoutes } from './api/routes';
 import { ErrorController } from './api/controllers/error.controller';
-import { AppError } from './utils';
+import { AppError, logger } from './utils';
 import MainRoutes from './constants/MainRoutes';
 import { configService } from './configs';
 import { ConfigService } from './configs/config.service';
-import { logger } from './utils';
 import { Connection, dbConnection } from './db';
+import { useExpressServer } from 'routing-controllers';
+import { TestController } from './api/controllers/test.controller';
 
 class App {
   private app: Application = express();
   private configService: ConfigService = configService;
   private logger = logger;
   private databaseConnection: Connection = dbConnection;
+
   constructor() {
-    this.bootstrap();
+    this.bootstrap().catch((error) => this.logger.error(error));
   }
+
   async bootstrap() {
     this.registerExpressConfig();
     await this.registerDatabase();
     this.registerLogger();
     this.registerRoutingControllers();
     this.registerGlobalErrorHandler();
-    this.app.use(ErrorController);
     await this.registerServer();
   }
 
@@ -43,17 +44,18 @@ class App {
   }
 
   private registerRoutingControllers() {
-    // useExpressServer(this.app, {
-    //   routePrefix: '/api/v1',
-    //   controllers: [WarehouseController],
-    //   defaultErrorHandler: false,
-    //   classTransformer: true,
-    // });
+    useExpressServer(this.app, {
+      routePrefix: '/api/v1',
+      controllers: [TestController],
+      defaultErrorHandler: false,
+      classTransformer: true,
+    });
     this.app.use(MainRoutes.USERS, UserRoutes);
     this.app.use(MainRoutes.WAREHOUSES, WarehouseRoutes);
     this.app.use(MainRoutes.PRODUCTS, ProductRoutes);
     this.app.use(MainRoutes.AUTH, AuthRoutes);
     this.app.use(MainRoutes.SUPPLIERS, SupplierRoutes);
+    this.app.use(MainRoutes.SALES_ORDERS, SalesOrderRoutes);
   }
 
   private async registerServer() {
@@ -66,6 +68,7 @@ class App {
     this.app.all('*', (req, _, next) => {
       next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
     });
+    this.app.use(ErrorController);
   }
 
   private registerLogger() {

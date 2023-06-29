@@ -22,7 +22,7 @@ const errorFilter = winston.format((log) => {
   return log.level === 'error' ? log : false;
 });
 
-const logger = winston.createLogger({
+export const logger = winston.createLogger({
   level: configService.LOG_LEVEL,
   transports: [
     new Console({ format: loggerConsoleFormat }),
@@ -32,5 +32,3 @@ const logger = winston.createLogger({
   exceptionHandlers: new File({ filename: 'src/logs/exception.log' }),
   rejectionHandlers: new File({ filename: 'src/logs/rejection.log' }),
 });
-
-export default logger;

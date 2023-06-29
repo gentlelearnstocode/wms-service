@@ -3,8 +3,6 @@ import { NextFunction, Request, Response } from 'express';
 import STATUS from '../../constants/Status';
 import { warehouseService } from '../services';
 import { logger } from '../../utils';
-import { WarehouseService } from '../services/warehouse.service';
-import { Get, Post, Patch, Req, Res, Controller, JsonController } from 'routing-controllers';
 
 export const createWarehouse = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -39,6 +37,17 @@ export const getWarehouse = async (req: Request, res: Response, next: NextFuncti
     res.status(200).json({
       status: STATUS.SUCCESS,
       data: warehouse,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteWarehouse = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    await warehouseService.delete(req.params.id);
+    res.status(200).json({
+      status: STATUS.SUCCESS,
     });
   } catch (error) {
     next(error);

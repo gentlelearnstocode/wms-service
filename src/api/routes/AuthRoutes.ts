@@ -1,6 +1,7 @@
-import { configService } from '../../configs';
+import { Router } from 'express';
 import { signInUser } from '../controllers/auth.controller';
 
-configService.router.route('/signin').post(signInUser)
+const router = Router();
+router.post('/signin', signInUser);
 
-export default configService.router
+export default router;

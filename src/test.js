@@ -1,5 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var momentTz = require("moment-timezone");
-var timeStampFormat = momentTz.tz('Asia/Ho_Chi_Minh');
-console.log(timeStampFormat);
+var SOStatus_1 = require("./enums/SOStatus");
+var testArray = Array.from(Object.values(SOStatus_1.SOStatus));
+console.log(testArray);
