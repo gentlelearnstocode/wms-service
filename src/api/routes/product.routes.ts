@@ -1,24 +1,24 @@
 import { Router } from 'express';
 
 import { createProduct, getAllProducts, getProduct, updateProduct } from '../controllers/product.controller';
-import { verifyToken, authorizeRole } from '../../middlewares';
+import { authorizeRole, verifyToken } from '../../middlewares';
 import UserRoles from '../../enums/UserRoles';
 
 const ProductRoutes = Router();
+const api = '/products';
 
-ProductRoutes.route('/').get(verifyToken, getAllProducts);
-ProductRoutes.route('/create-product').post(
+ProductRoutes.route(`${api}/`).get(verifyToken, getAllProducts);
+ProductRoutes.route(`${api}/create-product`).post(
   verifyToken,
   (req, res, next) => authorizeRole(req, res, next, [UserRoles.ADMIN, UserRoles.MANAGER]),
   createProduct,
 );
-ProductRoutes.route('/:id').get(getProduct);
-ProductRoutes.route('/update-product/:id').patch(
+ProductRoutes.route(`${api}/:id`).get(getProduct);
+ProductRoutes.route(`${api}/update-product/:id`).patch(
   verifyToken,
   (req, res, next) => authorizeRole(req, res, next, [UserRoles.ADMIN, UserRoles.MANAGER]),
   updateProduct,
 );
-
 
 
 export default ProductRoutes;

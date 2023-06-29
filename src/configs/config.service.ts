@@ -1,4 +1,3 @@
-import { Router } from 'express';
 import { config } from 'dotenv';
 
 export class ConfigService {
@@ -7,6 +6,7 @@ export class ConfigService {
       path: '.env',
     });
   }
+
   get NODE_ENV(): string {
     return process.env.NODE_ENV || '';
   }
@@ -37,5 +37,13 @@ export class ConfigService {
 
   get LOCAL_TIMEZONE(): string {
     return process.env.LOCAL_TIMEZONE || '';
+  }
+
+  get JWT_ALGORITHM(): string {
+    return process.env.JWT_ALGORITHM || '';
+  }
+
+  get API_VERSION(): string {
+    return process.env.API_VERSION || '';
   }
 }

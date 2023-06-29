@@ -1,10 +1,11 @@
-import { Controller, Get, Req, Res } from 'routing-controllers';
 import { Request, Response } from 'express';
 
-@Controller('/test')
 export class TestController {
-  @Get('/')
-  public getTest(@Req() req: Request, @Res() res: Response) {
-    res.send('success');
+  public static getTest(req: Request, res: Response) {
+    res.status(200).json({
+      status: 'success',
+    });
   }
 }
+
+export default TestController;

@@ -3,15 +3,12 @@ import morgan from 'morgan';
 import cors from 'cors';
 import 'reflect-metadata';
 
-import { AuthRoutes, ProductRoutes, SalesOrderRoutes, SupplierRoutes, UserRoutes, WarehouseRoutes } from './api/routes';
+import { auth, product, salesOrder, supplier, user, warehouse } from './api/routes';
 import { ErrorController } from './api/controllers/error.controller';
 import { AppError, logger } from './utils';
-import MainRoutes from './constants/MainRoutes';
 import { configService } from './configs';
 import { ConfigService } from './configs/config.service';
 import { Connection, dbConnection } from './db';
-import { useExpressServer } from 'routing-controllers';
-import { TestController } from './api/controllers/test.controller';
 
 class App {
   private app: Application = express();
@@ -44,18 +41,7 @@ class App {
   }
 
   private registerRoutingControllers() {
-    useExpressServer(this.app, {
-      routePrefix: '/api/v1',
-      controllers: [TestController],
-      defaultErrorHandler: false,
-      classTransformer: true,
-    });
-    this.app.use(MainRoutes.USERS, UserRoutes);
-    this.app.use(MainRoutes.WAREHOUSES, WarehouseRoutes);
-    this.app.use(MainRoutes.PRODUCTS, ProductRoutes);
-    this.app.use(MainRoutes.AUTH, AuthRoutes);
-    this.app.use(MainRoutes.SUPPLIERS, SupplierRoutes);
-    this.app.use(MainRoutes.SALES_ORDERS, SalesOrderRoutes);
+    [warehouse, product, user, salesOrder, auth, supplier].forEach((route) => this.app.use(this.configService.API_VERSION, route));
   }
 
   private async registerServer() {

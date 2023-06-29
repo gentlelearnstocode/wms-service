@@ -3,9 +3,10 @@ import { verifyToken } from '../../middlewares';
 import { Router } from 'express';
 
 const router = Router();
+const api = '/warehouses';
 
-router.get('/', verifyToken, getAllWarehouses).get('/:id', getWarehouse);
-router.post('/create-warehouse', verifyToken, createWarehouse);
+router.get(`${api}`, verifyToken, getAllWarehouses).get(`${api}/:id`, getWarehouse);
+router.post(`${api}/create-warehouse`, verifyToken, createWarehouse);
 router.delete('/:id', deleteWarehouse);
 
 export default router;

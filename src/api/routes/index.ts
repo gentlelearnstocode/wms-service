@@ -1,8 +1,8 @@
-import ProductRoutes from './ProductRoutes';
-import WarehouseRoutes from './WarehouseRoutes';
-import UserRoutes from './UserRoutes';
-import AuthRoutes from './AuthRoutes';
-import SupplierRoutes from './SupplierRoutes';
-import SalesOrderRoutes from './SalesOrderRoutes';
+import product from './product.routes';
+import warehouse from './warehouse.routes';
+import user from './user.routes';
+import auth from './auth.routes';
+import supplier from './supplier.routes';
+import salesOrder from './sales-order.routes';
 
-export { ProductRoutes, UserRoutes, AuthRoutes, SupplierRoutes, WarehouseRoutes, SalesOrderRoutes };
+export { product, user, auth, supplier, warehouse, salesOrder };

@@ -7,9 +7,10 @@ import {
 import { Router } from 'express';
 
 const router = Router();
+const api = '/sales-orders';
 
-router.get('/', getAllSalesOrders).get('/:id', getSalesOrder);
-router.post('/create-salesorder', createSalesOrder);
-router.delete('/:id', deleteSalesOrder);
+router.get(`${api}/`, getAllSalesOrders).get(`${api}/:id`, getSalesOrder);
+router.post(`${api}/create-salesorder`, createSalesOrder);
+router.delete(`${api}/:id`, deleteSalesOrder);
 
 export default router;
