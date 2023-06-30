@@ -46,4 +46,33 @@ export class ConfigService {
   get API_VERSION(): string {
     return process.env.API_VERSION || '';
   }
+
+  get PRODUCT_API(): string {
+    return '/products';
+  }
+
+  get WAREHOUSE_API(): string {
+    return '/warehouses';
+  }
+
+  get SALESORDER_API(): string {
+    return '/sales-orders';
+  }
+
+  get USER_API(): string {
+    return '/users';
+  }
+
+  get AUTH_API(): string {
+    return '/auth';
+  }
+
+  get SUPPLIER_API(): string {
+    return '/suppliers';
+  }
+
+  get INVENTORY_API(): string {
+    return '/inventory';
+  }
 }
+

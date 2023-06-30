@@ -1,4 +1,4 @@
-import { CounterModel } from '../api/models';
+import { CounterModel } from '../models';
 
 export const getIncrementValue = async (entity: string): Promise<number> => {
   const count = await CounterModel.findOneAndUpdate(

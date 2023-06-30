@@ -1,7 +1,7 @@
-import { Response, NextFunction, Request } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
-import { UserModel } from '../../api/models';
+import { UserModel } from '../../models';
 import Message from '../../constants/Message';
 import { configService } from '../../configs';
 

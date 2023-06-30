@@ -2,9 +2,8 @@ import express, { Application } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import 'reflect-metadata';
-
-import { auth, product, salesOrder, supplier, user, warehouse } from './api/routes';
-import { ErrorController } from './api/controllers/error.controller';
+import { auth, product, salesOrder, supplier, user, warehouse } from './api';
+import { ErrorController } from './controllers/error.controller';
 import { AppError, logger } from './utils';
 import { configService } from './configs';
 import { ConfigService } from './configs/config.service';
