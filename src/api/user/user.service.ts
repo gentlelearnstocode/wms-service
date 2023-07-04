@@ -1,4 +1,4 @@
-import { IUser } from '../../interfaces/user.interfaces';
+import { IUser } from './interfaces/user.interfaces';
 import { userRepository, UserRepository } from './user.repository';
 
 export class UserService {
@@ -17,12 +17,12 @@ export class UserService {
     return this.userRepository.findByEmail(email);
   }
 
-  async create(userData: IUser): Promise<any> {
-    return this.create(userData);
-  }
-
   async delete(id: string): Promise<void> {
     return this.userRepository.delete(id);
+  }
+
+  public async upsert<T>(data: IUser<T>) {
+    return this.userRepository.upsert(data);
   }
 }
 

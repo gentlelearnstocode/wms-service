@@ -1,34 +1,57 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
+import { inventoryService } from './inventory.service';
+import STATUS from '../../constants/Status';
 
-import Inventory from './inventory.model';
-
-export const createInventory = async (req: Request, res: Response) => {
-  const inventory = await Inventory.create(req.body);
-  res.status(201).json({
-    status: 'success',
-    data: {
-      inventory,
-    },
-  });
+export const upsert = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const inventory = await inventoryService.upsert(req.body);
+    res.status(201).json({
+      status: STATUS.SUCCESS,
+      data: {
+        inventory,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
-export const getAllInventories = async (req: Request, res: Response) => {
-  const inventories = await Inventory.find();
-  res.status(200).json({
-    status: 'success',
-    data: {
-      result: inventories.length,
-      inventories,
-    },
-  });
+export const getAllInventories = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const inventories = await inventoryService.findAll();
+    res.status(200).json({
+      status: STATUS.SUCCESS,
+      data: {
+        result: inventories.length,
+        inventories,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
-export const getInventory = async (req: Request, res: Response) => {
-  const inventory = await Inventory.findById(req.params.id);
-  res.status(200).json({
-    status: 'success',
-    data: {
-      inventory,
-    },
-  });
+export const getInventory = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const inventory = await inventoryService.findById(req.params.id);
+    res.status(200).json({
+      status: STATUS.SUCCESS,
+      data: {
+        inventory,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteInventory = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    await inventoryService.delete(req.params.id);
+    res.status(200).json({
+      status: STATUS.SUCCESS,
+    });
+  } catch (error) {
+    next(error);
+  }
 };

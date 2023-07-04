@@ -1,4 +1,4 @@
-import mongoose, { Document, Schema, SchemaTypes } from 'mongoose';
+import mongoose, { Document, Schema, Types } from 'mongoose';
 
 import { ISalesOrderProduct } from '../../interfaces/sales-order.interfaces';
 import { SOStatus } from '../../constants/enums';
@@ -7,6 +7,7 @@ export interface SalesOrderDoc extends Document {
   SONumber: number;
   status: string;
   products: ISalesOrderProduct[];
+  warehouseId: Schema.Types.ObjectId;
 }
 
 const schema = new Schema<SalesOrderDoc>({
@@ -14,20 +15,11 @@ const schema = new Schema<SalesOrderDoc>({
     type: Number,
     required: true,
   },
-  status: {
-    type: String,
-    enum: {
-      values: Array.from(Object.values(SOStatus)),
-      message: 'invalid sales order status',
-    },
-    default: SOStatus.PENDING,
-    required: [true, 'Sales order must have a status'],
-  },
   products: [
     {
       id: {
-        type: SchemaTypes.ObjectId,
-        get: (v: any) => v?.toString(),
+        type: Schema.Types.ObjectId,
+        get: (v: Types.ObjectId) => v?.toString(),
       },
       name: {
         type: String,
@@ -39,6 +31,20 @@ const schema = new Schema<SalesOrderDoc>({
       _id: false,
     },
   ],
+  status: {
+    type: String,
+    enum: {
+      values: Array.from(Object.values(SOStatus)),
+      message: 'invalid sales order status',
+    },
+    default: SOStatus.PENDING,
+    required: [true, 'Sales order must have a status'],
+  },
+  warehouseId: {
+    type: Schema.Types.ObjectId,
+    get: (v: Types.ObjectId) => v.toString(),
+    required: [true, 'sales order must belong to a warehouse'],
+  },
 });
 
 const SalesOrderModel = mongoose.model<SalesOrderDoc>('SalesOrder', schema);

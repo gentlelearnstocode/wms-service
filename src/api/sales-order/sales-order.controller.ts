@@ -3,9 +3,9 @@ import { NextFunction, Request, Response } from 'express';
 import { salesOrderService } from './sales-order.service';
 import STATUS from '../../constants/Status';
 
-export const createSalesOrder = async (req: Request, res: Response, next: NextFunction) => {
+export const upsert = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const salesOrder = await salesOrderService.create(req.body);
+    const salesOrder = await salesOrderService.upsert(req.body);
     res.status(201).json({
       status: STATUS.SUCCESS,
       data: {

@@ -4,11 +4,12 @@ import STATUS from '../../constants/Status';
 import { warehouseService } from './warehouse.service';
 import { logger } from '../../utils';
 
-export const createWarehouse = async (req: Request, res: Response, next: NextFunction) => {
+export const upsert = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    await warehouseService.create(req.body);
+    const warehouse = await warehouseService.upsert(req.body);
     res.status(201).json({
       status: STATUS.SUCCESS,
+      data: warehouse,
     });
   } catch (error) {
     next(error);

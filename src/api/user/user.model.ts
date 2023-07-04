@@ -1,16 +1,15 @@
-import mongoose, { Date, Schema, Types, Document } from 'mongoose';
+import mongoose, { Date, Document, Schema, Types } from 'mongoose';
 import validator from 'validator';
 
 interface UserDoc extends Document {
   email: string;
   role: string;
   password: string;
-  warehouse: Types.ObjectId;
+  warehouses: Types.ObjectId[];
   createdAt: Date;
 }
 
 const schema = new Schema<UserDoc>({
-  //create mongoose schema for user database model
   email: {
     type: String,
     required: [true, 'User must have an email'],
@@ -34,25 +33,22 @@ const schema = new Schema<UserDoc>({
     minlength: 8,
     select: false,
   },
-  warehouse: {
-    type: Schema.Types.ObjectId,
-    ref: 'Warehouse',
-    require: [true, 'A user must belong to at least one warehouse'],
-  },
+  warehouses: [
+    {
+      warehouseId: {
+        type: Schema.Types.ObjectId,
+        get: (v: mongoose.ObjectId) => v.toString(),
+        require: [true, 'A user must belong to at least one warehouse'],
+      },
+      _id: false,
+    },
+  ],
   createdAt: {
     type: Date,
     default: Date.now(),
   },
 });
 
-// schema.pre('save', async function (next) {
-//   if (this.isModified('password')) {
-//     return next();
-//   } else {
-//     this.password = await bcrypt.hash(this.password, 12);
-//     next();
-//   }
-// });
 
 const UserModel = mongoose.model<UserDoc>('User', schema);
 

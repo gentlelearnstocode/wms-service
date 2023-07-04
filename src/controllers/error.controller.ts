@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { AppError } from '../utils/app-error';
+import { AppError } from '../utils';
 import Message from '../constants/Message';
 import ERROR from '../constants/Error';
 import STATUS from '../constants/Status';

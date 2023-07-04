@@ -1,6 +1,6 @@
-export interface IUser {
+export interface IUser<T> {
   email: string;
   password: string;
   role: string;
-  warehouse: string;
+  warehouses: T;
 }

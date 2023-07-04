@@ -1,9 +1,10 @@
-import mongoose from 'mongoose';
-import { InventoryStatus } from '../../constants/enums';
+import mongoose, { Schema, Types } from 'mongoose';
 
 const schema = new mongoose.Schema({
-  product: {
-    type: mongoose.Schema.Types.ObjectId,
+  productId: {
+    type: Schema.Types.ObjectId,
+    get: (v: Types.ObjectId) => v.toString(),
+    required: [true, 'Inventory must be created with a productId'],
   },
   stockQuantity: {
     type: Number,
@@ -17,13 +18,9 @@ const schema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  status: {
-    type: String,
-    enum: {
-      values: [InventoryStatus.IN_STOCK, InventoryStatus.OUT_OF_STOCK],
-      message: 'Status must be either in-stock or out-of-stock',
-    },
-    require: [true, 'Inventory must have a status'],
+  warehouseId: {
+    type: Schema.Types.ObjectId,
+    get: (v: Types.ObjectId) => v.toString(),
   },
 });
 

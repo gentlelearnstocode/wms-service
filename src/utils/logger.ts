@@ -3,7 +3,7 @@ import * as momentTz from 'moment-timezone';
 
 import { configService } from '../configs';
 
-const { json, timestamp, colorize, combine, align, printf, logstash } = winston.format;
+const { json, timestamp, colorize, combine, align, printf } = winston.format;
 const { Console, File } = winston.transports;
 const timeStampFormat = momentTz.tz(configService.LOCAL_TIMEZONE).toString();
 const loggerConsoleFormat = combine(

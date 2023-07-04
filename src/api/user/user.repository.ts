@@ -1,29 +1,28 @@
 import UserModel from './user.model';
-import { IUser } from '../../interfaces/user.interfaces';
+import { IUser } from './interfaces/user.interfaces';
 
 export class UserRepository {
   public async findById(id: string) {
-    const user = await UserModel.findById(id).populate('warehouse');
-    return user;
+    return UserModel.findById(id);
   }
 
   public async findAll() {
-    const users = await UserModel.find();
-    return users;
+    return UserModel.find();
   }
 
   public async findByEmail(email: string) {
-    const user = await UserModel.findOne({ email }).select('+password');
-    return user;
-  }
-
-  public async create(userData: IUser) {
-    const newUser = await UserModel.create(userData);
-    return newUser;
+    return UserModel.findOne({ email }).select('+password');
   }
 
   public async delete(id: string): Promise<void> {
     await UserModel.findByIdAndDelete(id);
+  }
+
+  public async upsert<T>(data: IUser<T>) {
+    return UserModel.findOneAndUpdate({ email: data.email }, data, {
+      upsert: true,
+      new: true,
+    });
   }
 }
 

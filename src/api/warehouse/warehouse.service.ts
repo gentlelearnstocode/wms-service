@@ -14,12 +14,12 @@ export class WarehouseService {
     return this.warehouseRepository.findAll(query);
   }
 
-  public async create(data: IWarehouse) {
-    return this.warehouseRepository.create(data);
-  }
-
   public async delete(id: string) {
     return this.warehouseRepository.delete(id);
+  }
+
+  public async upsert(data: IWarehouse) {
+    return this.warehouseRepository.upsert(data);
   }
 }
 

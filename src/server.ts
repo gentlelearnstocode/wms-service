@@ -2,7 +2,7 @@ import express, { Application } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import 'reflect-metadata';
-import { auth, product, salesOrder, supplier, user, warehouse } from './api';
+import { auth, inventory, product, salesOrder, supplier, user, warehouse } from './api';
 import { ErrorController } from './controllers/error.controller';
 import { AppError, logger } from './utils';
 import { configService } from './configs';
@@ -10,16 +10,16 @@ import { ConfigService } from './configs/config.service';
 import { Connection, dbConnection } from './db';
 
 class App {
-  private app: Application = express();
-  private configService: ConfigService = configService;
-  private logger = logger;
-  private databaseConnection: Connection = dbConnection;
+  app: Application = express();
+  configService: ConfigService = configService;
+  logger = logger;
+  databaseConnection: Connection = dbConnection;
 
   constructor() {
     this.bootstrap().catch((error) => this.logger.error(error));
   }
 
-  async bootstrap() {
+  private async bootstrap() {
     this.registerExpressConfig();
     await this.registerDatabase();
     this.registerLogger();
@@ -40,7 +40,8 @@ class App {
   }
 
   private registerRoutingControllers() {
-    [warehouse, product, user, salesOrder, auth, supplier].forEach((route) => this.app.use(this.configService.API_VERSION, route));
+    [warehouse, product, user, salesOrder, auth, supplier, inventory].forEach((route) =>
+      this.app.use(this.configService.API_VERSION, route));
   }
 
   private async registerServer() {

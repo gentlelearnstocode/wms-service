@@ -1,9 +1,12 @@
 import { Router } from 'express';
-import { createInventory, getAllInventories } from './inventory.controller';
+import { deleteInventory, getAllInventories, getInventory, upsert } from './inventory.controller';
 import { configService } from '../../configs';
 
-const InventoryRouter = Router();
+const router = Router();
 const api = configService.INVENTORY_API;
 
-InventoryRouter.route(`${api}/update-inventory/:id`).patch(createInventory);
-InventoryRouter.route(`${api}/`).get(getAllInventories);
+router.post(`${api}/create-inventory/`, upsert);
+router.get(`${api}/`, getAllInventories).get(`${api}/:id`, getInventory);
+router.delete(`${api}/:id`, deleteInventory);
+
+export default router;

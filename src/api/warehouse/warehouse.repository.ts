@@ -5,22 +5,23 @@ import { IWarehouseQuery } from '../../interfaces/query.interfaces';
 
 export class WarehouseRepository extends RepositoryAbstract {
   public async findById(id: string) {
-    const warehouse = await WarehouseModel.findById(id);
-    return warehouse;
+    return WarehouseModel.findById(id);
   }
 
   public async findAll(query: IWarehouseQuery) {
     const pipelines = this.buildAggregationPipelines(query);
-    const warehouses = await WarehouseModel.aggregate(pipelines);
-    return warehouses;
-  }
-
-  public async create(data: IWarehouse): Promise<void> {
-    await WarehouseModel.create(data);
+    return WarehouseModel.aggregate(pipelines);
   }
 
   public async delete(id: string) {
     await WarehouseModel.findByIdAndDelete(id);
+  }
+
+  public async upsert(data: IWarehouse) {
+    return WarehouseModel.findOneAndUpdate({ name: data.name }, data, {
+      upsert: true,
+      new: true,
+    });
   }
 }
 

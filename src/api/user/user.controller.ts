@@ -6,16 +6,20 @@ import STATUS from '../../constants/Status';
 import { AppError, jwtGenerator } from '../../utils';
 import Message from '../../constants/Message';
 
-export const createUser = async (req: Request, res: Response, next: NextFunction) => {
+export const upsert = async (req: Request, res: Response, next: NextFunction) => {
   if (!req.body.email) return next(new AppError(Message.PROVIDE_EMAIL, 400));
   if (!req.body.password) return next(new AppError(Message.PROVIDE_PASSWORD, 400));
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 12);
-    const user = await userService.create({
+    const user = await userService.upsert({
       email: req.body.email,
       role: req.body.role,
       password: hashedPassword,
-      warehouse: req.body.warehouse._id,
+      warehouses: req.body.warehouses.map((warehouse: any) => {
+        return {
+          warehouseId: warehouse.warehouseId,
+        };
+      }),
     });
     const token = jwtGenerator(user._id);
     res.status(201).json({

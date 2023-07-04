@@ -9,4 +9,15 @@ export abstract class RepositoryAbstract {
     pipelines.push({ $limit: Number(limit) || 100 });
     return pipelines;
   }
+
+  protected buildLookupPipeline(from: string, localField: string, foreignField: string, as: string) {
+    return {
+      '$lookup': {
+        from,
+        localField,
+        foreignField,
+        as,
+      },
+    };
+  }
 }

@@ -1,18 +1,13 @@
-import { RepositoryAbstract } from '../../abstracts';
 import SalesOrderModel from './sales-order.model';
+import { RepositoryAbstract } from '../../abstracts';
+import { ISalesOrder } from './interfaces/sales-order.interface';
+
 
 export class SalesOrderRepository extends RepositoryAbstract {
   public async findAll() {
-    const lookup = {
-      $lookup: {
-        from: 'products',
-        localField: 'products.id',
-        foreignField: '_id',
-        as: 'productDetail`',
-      },
-    };
-    const salesOrders = await SalesOrderModel.aggregate([lookup]);
-    return salesOrders;
+    const lookup1 = this.buildLookupPipeline('products', 'products.id', '_id', 'productDetail');
+    const lookup2 = this.buildLookupPipeline('warehouses', 'warehouseId', '_id', 'warehouseDetail');
+    return SalesOrderModel.aggregate([lookup1], [lookup2]);
   }
 
   public async findById(id: string) {
@@ -20,9 +15,11 @@ export class SalesOrderRepository extends RepositoryAbstract {
     return salesOrder;
   }
 
-  public async create(data: any) {
-    const salesOrder = await SalesOrderModel.create(data);
-    return salesOrder;
+  async upsert(data: ISalesOrder) {
+    return SalesOrderModel.findOneAndUpdate({ _id: data._id }, data, {
+      upsert: true,
+      new: true,
+    });
   }
 
   public async delete(id: string) {

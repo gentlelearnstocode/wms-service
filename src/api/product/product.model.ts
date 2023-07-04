@@ -5,7 +5,6 @@ export interface ProductDoc extends Document {
   price: number;
   type: string;
   createdAt: Date;
-  warehouse: Types.ObjectId[];
   imageUrl: string;
   suppliers: Types.ObjectId[];
 }
@@ -31,13 +30,6 @@ const schema = new Schema<ProductDoc>({
     default: Date.now(),
     select: false,
   },
-  warehouse: [
-    {
-      type: Types.ObjectId,
-      ref: 'Warehouse',
-      required: [true, 'A newly created product must belong to at least one warehouse'],
-    },
-  ],
   imageUrl: {
     type: String,
     required: true,
@@ -46,7 +38,7 @@ const schema = new Schema<ProductDoc>({
   },
   suppliers: [
     {
-      type: Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'Supplier',
       required: [true, 'A product must have at least one supplier'],
     },
