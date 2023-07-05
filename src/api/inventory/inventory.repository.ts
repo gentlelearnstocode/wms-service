@@ -13,10 +13,7 @@ export class InventoryRepository extends RepositoryAbstract {
   }
 
   public async upsert(data: IInventory) {
-    return InventoryModel.findOneAndUpdate({ productId: data.productId }, data, {
-      upsert: true,
-      new: true,
-    });
+    return this.findOneAndUpdate(data.productId, data);
   }
 
   public async delete(id: string) {
@@ -25,6 +22,11 @@ export class InventoryRepository extends RepositoryAbstract {
 
   public async findByProductId(productId: string) {
     return InventoryModel.find({ productId: { $eq: productId } });
+  }
+
+  public async findOneAndUpdate(filter: any, data: any) {
+    console.log('inventory filter', filter);
+    return InventoryModel.findOneAndUpdate(filter, data, { upsert: true, new: true });
   }
 }
 

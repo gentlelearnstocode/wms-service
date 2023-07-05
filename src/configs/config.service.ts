@@ -74,5 +74,9 @@ export class ConfigService {
   get INVENTORY_API(): string {
     return '/inventory';
   }
+
+  get PURCHASEORDER_API(): string {
+    return '/purchase-orders';
+  }
 }
 

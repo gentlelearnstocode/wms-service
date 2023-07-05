@@ -18,7 +18,7 @@ export class InventoryService {
   }
 
   public async upsert(data: IInventory) {
-    const existedInventory = await this.inventoryRepository.findByProductId(data.productId);
+    const existedInventory = await this.findByProductId(data.productId);
     const existedProduct = await this.productService.findById(data.productId);
     if (!existedInventory.length && existedProduct) {
       return await this.inventoryRepository.upsert(data);
@@ -29,6 +29,14 @@ export class InventoryService {
 
   public async delete(id: string) {
     return this.inventoryRepository.delete(id);
+  }
+
+  public async findByProductId(productId: string) {
+    return this.inventoryRepository.findByProductId(productId);
+  }
+
+  public async findOneAndUpdate(filter: any, data: any) {
+    return this.inventoryRepository.findOneAndUpdate(filter, data);
   }
 }
 

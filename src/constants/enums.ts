@@ -1,9 +1,6 @@
 export enum SOStatus {
   PENDING = 'pending',
-  CONFIRMED = 'confirmed',
   ISSUED = 'issued',
-  DELIVERED = 'delivered',
-  CANCEL = 'cancel',
 }
 
 export enum UserRoles {
@@ -15,5 +12,10 @@ export enum UserRoles {
 export enum InventoryStatus {
   IN_STOCK = 'in-stock',
   OUT_OF_STOCK = 'out-of-stock'
+}
+
+export enum POStatus {
+  PENDING = 'pending',
+  RECEIVED = 'received'
 }
 

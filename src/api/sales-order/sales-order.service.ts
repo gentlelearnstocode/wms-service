@@ -5,7 +5,6 @@ import mongoose from 'mongoose';
 import { ISalesOrder } from './interfaces/sales-order.interface';
 
 export class SalesOrderService {
-  private readonly getIncrementValue = getIncrementValue;
   private readonly inventoryService: InventoryService = inventoryService;
 
   constructor(private readonly salesOrderRepository: SalesOrderRepository) {
@@ -22,17 +21,23 @@ export class SalesOrderService {
   public async upsert(data: ISalesOrder) {
     if (!data._id) {
       data._id = new mongoose.mongo.ObjectId().toString();
-      const SONumber = await this.getIncrementValue('SONumber');
+      const SONumber = await getIncrementValue('SONumber');
       data = {
         ...data,
         SONumber,
       };
     }
-    return this.salesOrderRepository.upsert(data);
+    const salesOrder = this.salesOrderRepository.upsert(data);
+    await Promise.all(data.products.map((product) => this.adjustInventory(product.id, product.orderQuantity)));
+    return salesOrder;
   }
 
   public async delete(id: string) {
     return this.salesOrderRepository.delete(id);
+  }
+
+  private async adjustInventory(productId: string, quantity: number) {
+    await this.inventoryService.findOneAndUpdate({ productId }, { $inc: { 'outgoingQuantity': quantity } });
   }
 }
 

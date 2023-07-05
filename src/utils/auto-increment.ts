@@ -16,5 +16,7 @@ export const getIncrementValue = async (entity: string): Promise<number> => {
     },
   );
 
+  console.log('log count', count);
+
   return count.value ?? NaN;
 };

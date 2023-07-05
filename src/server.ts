@@ -2,7 +2,7 @@ import express, { Application } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import 'reflect-metadata';
-import { auth, inventory, product, salesOrder, supplier, user, warehouse } from './api';
+import { auth, inventory, product, purchaseOrder, salesOrder, supplier, user, warehouse } from './api';
 import { ErrorController } from './controllers/error.controller';
 import { AppError, logger } from './utils';
 import { configService } from './configs';
@@ -40,7 +40,7 @@ class App {
   }
 
   private registerRoutingControllers() {
-    [warehouse, product, user, salesOrder, auth, supplier, inventory].forEach((route) =>
+    [warehouse, product, user, salesOrder, auth, supplier, inventory, purchaseOrder].forEach((route) =>
       this.app.use(this.configService.API_VERSION, route));
   }
 
