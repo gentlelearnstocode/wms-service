@@ -26,7 +26,6 @@
     "lodash": "^4.17.21",
     "moment-timezone": "^0.5.43",
     "mongoose": "^7.0.3",
-    "mongoose-sequence": "^5.3.1",
     "multer": "^1.4.5-lts.1",
     "reflect-metadata": "^0.1.13",
     "routing-controllers": "^0.10.4",
@@ -46,8 +45,11 @@
     "@typescript-eslint/eslint-plugin": "^5.59.0",
     "@typescript-eslint/parser": "^5.59.0",
     "eslint": "^8.38.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "morgan": "^1.10.0",
     "nodemon": "^1.14.9",
+    "prettier": "3.0.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.2"
   }

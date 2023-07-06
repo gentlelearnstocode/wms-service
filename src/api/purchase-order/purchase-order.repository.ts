@@ -1,12 +1,12 @@
 import PurchaseOrderModel from './purchase-order.model';
-import { RepositoryAbstract } from '../../abstracts';
 import { IPurchaseOrder } from './interfaces/purchase-order.interface';
+import { buildLookupPipeline } from '../../utils';
 
 
-export class PurchaseOrderRepository extends RepositoryAbstract {
+export class PurchaseOrderRepository {
   public async findAll() {
-    const lookup1 = this.buildLookupPipeline('products', 'products.id', '_id', 'productDetail');
-    const lookup2 = this.buildLookupPipeline('warehouses', 'warehouseId', '_id', 'warehouseDetail');
+    const lookup1 = buildLookupPipeline('products', 'products.id', '_id', 'productDetail');
+    const lookup2 = buildLookupPipeline('warehouses', 'warehouseId', '_id', 'warehouseDetail');
     return PurchaseOrderModel.aggregate([lookup1], [lookup2]);
   }
 

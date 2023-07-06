@@ -1,18 +1,16 @@
 import SalesOrderModel from './sales-order.model';
-import { RepositoryAbstract } from '../../abstracts';
 import { ISalesOrder } from './interfaces/sales-order.interface';
+import { buildLookupPipeline } from '../../utils';
 
-
-export class SalesOrderRepository extends RepositoryAbstract {
+export class SalesOrderRepository {
   public async findAll() {
-    const lookup1 = this.buildLookupPipeline('products', 'products.id', '_id', 'productDetail');
-    const lookup2 = this.buildLookupPipeline('warehouses', 'warehouseId', '_id', 'warehouseDetail');
+    const lookup1 = buildLookupPipeline('products', 'products.id', '_id', 'productDetail');
+    const lookup2 = buildLookupPipeline('warehouses', 'warehouseId', '_id', 'warehouseDetail');
     return SalesOrderModel.aggregate([lookup1], [lookup2]);
   }
 
   public async findById(id: string) {
-    const salesOrder = await SalesOrderModel.findById(id);
-    return salesOrder;
+    return SalesOrderModel.findById(id);
   }
 
   async upsert(data: ISalesOrder) {

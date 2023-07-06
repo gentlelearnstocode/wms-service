@@ -1,15 +1,15 @@
 import { IWarehouse } from './interfaces/warehouse.interfaces';
 import WarehouseModel from './warehouse.model';
-import { RepositoryAbstract } from '../../abstracts';
 import { IWarehouseQuery } from '../../interfaces/query.interfaces';
+import { buildAggregationPipelines } from '../../utils';
 
-export class WarehouseRepository extends RepositoryAbstract {
+export class WarehouseRepository {
   public async findById(id: string) {
     return WarehouseModel.findById(id);
   }
 
-  public async findAll(query: IWarehouseQuery) {
-    const pipelines = this.buildAggregationPipelines(query);
+  async findAll(query: IWarehouseQuery) {
+    const pipelines = buildAggregationPipelines(query);
     return WarehouseModel.aggregate(pipelines);
   }
 
