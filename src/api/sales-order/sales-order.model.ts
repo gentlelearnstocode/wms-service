@@ -1,6 +1,6 @@
 import mongoose, { Document, Schema, Types } from 'mongoose';
 
-import { ISalesOrderProduct } from '../../interfaces/sales-order.interfaces';
+import { ISalesOrderProduct } from './interfaces/sales-order.interface';
 import { SOStatus } from '../../constants/enums';
 
 export interface SalesOrderDoc extends Document {

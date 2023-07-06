@@ -3,7 +3,7 @@ import { CounterModel } from '../models';
 export const getIncrementValue = async (entity: string): Promise<number> => {
   const count = await CounterModel.findOneAndUpdate(
     {
-      entity,
+      _id: entity,
     },
     {
       $inc: {
@@ -15,8 +15,5 @@ export const getIncrementValue = async (entity: string): Promise<number> => {
       new: true,
     },
   );
-
-  console.log('log count', count);
-
   return count.value ?? NaN;
 };

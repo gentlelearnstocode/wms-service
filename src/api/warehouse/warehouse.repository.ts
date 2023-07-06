@@ -1,4 +1,4 @@
-import { IWarehouse } from '../../interfaces/warehouse.interfaces';
+import { IWarehouse } from './interfaces/warehouse.interfaces';
 import WarehouseModel from './warehouse.model';
 import { RepositoryAbstract } from '../../abstracts';
 import { IWarehouseQuery } from '../../interfaces/query.interfaces';

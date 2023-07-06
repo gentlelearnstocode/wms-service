@@ -1,5 +1,5 @@
 import { IWarehouseQuery } from '../../interfaces/query.interfaces';
-import { IWarehouse } from '../../interfaces/warehouse.interfaces';
+import { IWarehouse } from './interfaces/warehouse.interfaces';
 import { warehouseRepository, WarehouseRepository } from './warehouse.repository';
 
 export class WarehouseService {
