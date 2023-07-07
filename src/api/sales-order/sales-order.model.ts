@@ -8,6 +8,8 @@ export interface SalesOrderDoc extends Document, BaseDoc {
   status: string;
   products: ISalesOrderProduct[];
   warehouseId: Schema.Types.ObjectId;
+  issuedAt?: Schema.Types.Date;
+  totalOrderQuantity?: number;
 }
 
 const schema = new Schema<SalesOrderDoc>({
@@ -35,10 +37,7 @@ const schema = new Schema<SalesOrderDoc>({
     type: String,
     enum: {
       values: Array.from(Object.values(SOStatus)),
-      message: 'invalid sales order status',
     },
-    default: SOStatus.PENDING,
-    required: [true, 'Sales order must have a status'],
   },
   warehouseId: {
     type: Schema.Types.ObjectId,
@@ -47,12 +46,14 @@ const schema = new Schema<SalesOrderDoc>({
   },
   createdAt: {
     type: Date,
-    default: new Date(),
   },
   updatedAt: {
     type: Date,
-    default: new Date(),
   },
+  issuedAt: {
+    type: Date,
+  },
+  totalOrderQuantity: { type: Number },
 });
 
 const SalesOrderModel = mongoose.model<SalesOrderDoc>('SalesOrder', schema);

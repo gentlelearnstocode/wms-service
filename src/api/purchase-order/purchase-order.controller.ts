@@ -55,3 +55,15 @@ export const deletePurchaseOrder = async (req: Request, res: Response, next: Nex
     next(error);
   }
 };
+
+export const receivePurchaseOrder = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const issued = await purchaseOrderService.receivePurchaseOrder(req.params.id);
+    res.status(204).json({
+      status: STATUS.SUCCESS,
+      data: issued,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
