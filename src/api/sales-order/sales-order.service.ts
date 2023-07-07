@@ -30,11 +30,11 @@ export class SalesOrderService {
         SONumber,
       };
     }
-    await this.productService.validateProducts(data.products);
     const entity = new SalesOrderEntity(data).upsert();
+    await this.productService.validateProducts(entity.products);
     const salesOrder = this.salesOrderRepository.upsert(entity);
     await Promise.all(
-      data.products.map((product: ISalesOrderProduct) =>
+      entity.products.map((product: ISalesOrderProduct) =>
         this.inventoryService.adjustOutgoingQuantity(product.id, product.orderQuantity),
       ),
     );
@@ -45,7 +45,7 @@ export class SalesOrderService {
     const salesOrder = await salesOrderRepository.findById(id);
     if (salesOrder && salesOrder.status === SOStatus.PENDING) {
       const entity = new SalesOrderEntity(salesOrder).issue();
-      await this.productService.validateProducts(salesOrder.products);
+      await this.productService.validateProducts(entity.products);
       await Promise.all(
         entity.products.map((product: ISalesOrderProduct) => {
           this.inventoryService.adjustStockQuantity(product.id, -product.orderQuantity),

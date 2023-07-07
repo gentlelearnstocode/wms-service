@@ -1,9 +1,9 @@
-import SalesOrderModel, { SalesOrderDoc } from './sales-order.model';
+import SalesOrderModel from './sales-order.model';
 import { ISalesOrder } from './interfaces/sales-order.interface';
 import { buildLookupPipeline } from '../../utils';
 
 export class SalesOrderRepository {
-  public async findAll() {
+  public async findAll(): Promise<ISalesOrder[]> {
     const lookup1 = buildLookupPipeline('products', 'products.id', '_id', 'productDetail');
     const lookup2 = buildLookupPipeline('warehouses', 'warehouseId', '_id', 'warehouseDetail');
     return SalesOrderModel.aggregate([lookup1], [lookup2]);
@@ -13,7 +13,7 @@ export class SalesOrderRepository {
     return SalesOrderModel.findById(id);
   }
 
-  async upsert(data: ISalesOrder) {
+  async upsert(data: ISalesOrder): Promise<ISalesOrder | null> {
     return SalesOrderModel.findOneAndUpdate({ _id: data._id }, data, {
       upsert: true,
       new: true,
@@ -21,11 +21,11 @@ export class SalesOrderRepository {
     });
   }
 
-  public async delete(id: string) {
+  public async delete(id: string): Promise<void> {
     await SalesOrderModel.findByIdAndDelete(id);
   }
 
-  public async findByIdAndUpdate(data: ISalesOrder) {
+  public async findByIdAndUpdate(data: ISalesOrder): Promise<void> {
     await SalesOrderModel.findByIdAndUpdate(data._id, data, {
       returnDocument: 'after',
       runValidators: true,

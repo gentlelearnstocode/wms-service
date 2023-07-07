@@ -5,6 +5,8 @@ import { IPurchaseOrder, IPurchaseOrderProduct } from './interfaces/purchase-ord
 import mongoose from 'mongoose';
 import { ISalesOrderProduct } from '../sales-order/interfaces/sales-order.interface';
 import { productService, ProductService } from '../product/product.service';
+import { PurchaseOrderEntity } from './purchase-order.entity';
+import { POStatus } from '../../constants/enums';
 
 export class PurchaseOrderService {
   private readonly inventoryService: InventoryService = inventoryService;
@@ -29,8 +31,9 @@ export class PurchaseOrderService {
         PONumber,
       };
     }
+    const entity = new PurchaseOrderEntity(data).upsert();
     await this.productService.validateProducts(data.products);
-    const purchaseOrder = this.purchaseOrderRepository.upsert(data);
+    const purchaseOrder = this.purchaseOrderRepository.upsert(entity);
     await Promise.all(
       data.products.map((product) =>
         this.inventoryService.adjustIncomingQuantity(product.id, product.orderQuantity),
@@ -41,15 +44,17 @@ export class PurchaseOrderService {
 
   public async receivePurchaseOrder(id: string) {
     const purchaseOrder = await purchaseOrderRepository.findById(id);
-    if (purchaseOrder) {
-      this.productService.validateProducts(purchaseOrder.products);
+    if (purchaseOrder && purchaseOrder.status === POStatus.PENDING) {
+      const entity = new PurchaseOrderEntity(purchaseOrder).receive();
+      this.productService.validateProducts(entity.products);
       await Promise.all(
-        purchaseOrder.products.map((product: IPurchaseOrderProduct) => {
+        entity.products.map((product: IPurchaseOrderProduct) => {
           this.inventoryService.adjustStockQuantity(product.id, product.orderQuantity),
             this.inventoryService.adjustIncomingQuantity(product.id, -product.orderQuantity);
         }),
       );
-      return purchaseOrder;
+      await this.purchaseOrderRepository.findByIdAndUpdate(entity);
+      return entity;
     } else {
       throw new AppError('Bad request', 400);
     }

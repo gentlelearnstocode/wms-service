@@ -1,4 +1,4 @@
-import mongoose, { Document, Schema, Types } from 'mongoose';
+import mongoose, { Document, Schema, SchemaType, Types } from 'mongoose';
 import { IPurchaseOrderProduct } from './interfaces/purchase-order.interface';
 import { POStatus } from '../../constants/enums';
 import { BaseDoc } from '../../interfaces/base.interface';
@@ -9,6 +9,8 @@ export interface PurchaseOrderDoc extends Document, BaseDoc {
   products: IPurchaseOrderProduct[];
   warehouseId: Schema.Types.ObjectId;
   supplier: Schema.Types.ObjectId;
+  receivedAt?: Schema.Types.Date;
+  totalOrderQuantity?: Schema.Types.ObjectId;
 }
 
 const schema = new Schema<PurchaseOrderDoc>({
@@ -48,11 +50,15 @@ const schema = new Schema<PurchaseOrderDoc>({
   },
   createdAt: {
     type: Schema.Types.Date,
-    default: new Date(),
   },
   updatedAt: {
     type: Schema.Types.Date,
-    default: new Date(),
+  },
+  totalOrderQuantity: {
+    type: Number,
+  },
+  receivedAt: {
+    type: Schema.Types.Date,
   },
 });
 

@@ -58,10 +58,10 @@ export const deletePurchaseOrder = async (req: Request, res: Response, next: Nex
 
 export const receivePurchaseOrder = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const issued = await purchaseOrderService.receivePurchaseOrder(req.params.id);
-    res.status(204).json({
+    const received = await purchaseOrderService.receivePurchaseOrder(req.params.id);
+    res.status(200).json({
       status: STATUS.SUCCESS,
-      data: issued,
+      data: received,
     });
   } catch (e) {
     next(e);
