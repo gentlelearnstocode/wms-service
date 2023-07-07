@@ -4,7 +4,11 @@ export interface IPurchaseOrder {
   status: string;
   warehouseId: string;
   PONumber: number;
-  supplier: string;
+  supplier?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  receivedAt?: string;
+  totalOrderQuantity?: number;
 }
 
 export interface IPurchaseOrderProduct {
