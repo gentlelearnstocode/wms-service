@@ -28,10 +28,7 @@ export class SalesOrderService {
         SONumber,
       };
     }
-    const validProducts = await Promise.all(
-      data.products.map((i: ISalesOrderProduct) => this.productService.findById(i.id)),
-    );
-    if (validProducts.includes(null)) throw new AppError('Bad request', 400);
+    await this.productService.validateProducts(data.products);
     const salesOrder = this.salesOrderRepository.upsert(data);
     await Promise.all(
       data.products.map((product: ISalesOrderProduct) =>
@@ -39,6 +36,21 @@ export class SalesOrderService {
       ),
     );
     return salesOrder;
+  }
+
+  public async issueSalesOrder(id: string) {
+    const salesOrder = await salesOrderRepository.findById(id);
+    if (salesOrder) {
+      this.productService.validateProducts(salesOrder.products);
+      await Promise.all(
+        salesOrder.products.map((product: ISalesOrderProduct) => {
+          this.inventoryService.adjustStockQuantity(product.id, -product.orderQuantity),
+            this.inventoryService.adjustOutgoingQuantity(product.id, -product.orderQuantity);
+        }),
+      );
+    } else {
+      throw new AppError('Bad request', 400);
+    }
   }
 
   public async delete(id: string) {

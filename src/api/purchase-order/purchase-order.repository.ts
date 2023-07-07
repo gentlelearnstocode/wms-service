@@ -2,7 +2,6 @@ import PurchaseOrderModel from './purchase-order.model';
 import { IPurchaseOrder } from './interfaces/purchase-order.interface';
 import { buildLookupPipeline } from '../../utils';
 
-
 export class PurchaseOrderRepository {
   public async findAll() {
     const lookup1 = buildLookupPipeline('products', 'products.id', '_id', 'productDetail');
@@ -18,6 +17,7 @@ export class PurchaseOrderRepository {
     return PurchaseOrderModel.findOneAndUpdate({ _id: data._id }, data, {
       upsert: true,
       new: true,
+      returnDocument: 'after',
     });
   }
 

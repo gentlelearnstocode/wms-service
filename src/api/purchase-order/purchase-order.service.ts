@@ -29,10 +29,7 @@ export class PurchaseOrderService {
         PONumber,
       };
     }
-    const validProducts = await Promise.all(
-      data.products.map((i: ISalesOrderProduct) => this.productService.findById(i.id)),
-    );
-    if (validProducts.includes(null)) throw new AppError('Bad request', 400);
+    await this.productService.validateProducts(data.products);
     const purchaseOrder = this.purchaseOrderRepository.upsert(data);
     await Promise.all(
       data.products.map((product) =>

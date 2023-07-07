@@ -56,3 +56,15 @@ export const deleteSalesOrder = async (req: Request, res: Response, next: NextFu
     next(error);
   }
 };
+
+export const issueSalesOrder = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const issued = await salesOrderService.issueSalesOrder(req.params.id);
+    res.status(204).json({
+      status: STATUS.SUCCESS,
+      data: issued,
+    });
+  } catch (e) {
+    next(e);
+  }
+};

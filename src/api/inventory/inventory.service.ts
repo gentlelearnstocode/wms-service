@@ -45,10 +45,21 @@ export class InventoryService {
   }
 
   public async adjustIncomingQuantity(productId: string, quantity: number) {
-    if (await this.productService.findById(productId)) {
+    const product = await this.productService.findById(productId);
+    if (product) {
       await this.inventoryRepository.findOneAndUpdate(
         { productId },
         { $inc: { incomingQuantity: quantity } },
+      );
+    }
+  }
+
+  public async adjustStockQuantity(productId: string, quantity: number) {
+    const product = await this.productService.findById(productId);
+    if (product) {
+      await this.inventoryRepository.findOneAndUpdate(
+        { productId },
+        { $inc: { stockQuantity: quantity } },
       );
     }
   }

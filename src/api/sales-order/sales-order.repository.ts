@@ -1,4 +1,4 @@
-import SalesOrderModel from './sales-order.model';
+import SalesOrderModel, { SalesOrderDoc } from './sales-order.model';
 import { ISalesOrder } from './interfaces/sales-order.interface';
 import { buildLookupPipeline } from '../../utils';
 
@@ -17,11 +17,19 @@ export class SalesOrderRepository {
     return SalesOrderModel.findOneAndUpdate({ _id: data._id }, data, {
       upsert: true,
       new: true,
+      returnDocument: 'after',
     });
   }
 
   public async delete(id: string) {
     await SalesOrderModel.findByIdAndDelete(id);
+  }
+
+  public async findByIdAndUpdate(data: ISalesOrder) {
+    await SalesOrderModel.findByIdAndUpdate(data._id, data, {
+      returnDocument: 'after',
+      runValidators: true,
+    });
   }
 }
 

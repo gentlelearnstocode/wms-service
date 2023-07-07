@@ -1,10 +1,11 @@
 import InventoryModel from './inventory.model';
 import { IInventory } from './interfaces/inventory.interface';
 import { buildLookupPipeline } from '../../utils';
+import { FilterQuery, UpdateQuery } from 'mongoose';
 
 export class InventoryRepository {
   public async findAll() {
-    const lookup = buildLookupPipeline('products', 'productId', '_id', 'product');
+    const lookup = buildLookupPipeline('products', 'productId', '_id', 'products');
     return InventoryModel.aggregate([lookup]);
   }
 
@@ -13,7 +14,7 @@ export class InventoryRepository {
   }
 
   public async upsert(data: IInventory) {
-    return this.findOneAndUpdate(data.productId, data);
+    return this.findOneAndUpdate({ productId: data.productId }, data);
   }
 
   public async delete(id: string) {
@@ -24,10 +25,11 @@ export class InventoryRepository {
     return InventoryModel.find({ productId: { $eq: productId } });
   }
 
-  public async findOneAndUpdate(filter: any, data: any) {
+  public async findOneAndUpdate(filter: FilterQuery<IInventory>, data: UpdateQuery<IInventory>) {
     return InventoryModel.findOneAndUpdate(filter, data, {
       upsert: true,
       new: true,
+      returnDocument: 'after',
     });
   }
 }

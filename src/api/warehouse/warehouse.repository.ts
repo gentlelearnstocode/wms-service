@@ -21,6 +21,7 @@ export class WarehouseRepository {
     return WarehouseModel.findOneAndUpdate({ name: data.name }, data, {
       upsert: true,
       new: true,
+      returnDocument: 'after',
     });
   }
 }

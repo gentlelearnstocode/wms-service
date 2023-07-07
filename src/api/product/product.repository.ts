@@ -19,8 +19,11 @@ export class ProductRepository {
   }
 
   public async findByIdAndUpdate(id: string, data: any) {
-    const updatedProduct = await ProductModel.findByIdAndUpdate(id, data, { runValidators: true, new: true });
-    return updatedProduct;
+    await ProductModel.findByIdAndUpdate(id, data, {
+      runValidators: true,
+      new: true,
+      returnDocument: 'after',
+    });
   }
 
   public async delete(id: string) {

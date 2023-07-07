@@ -2,7 +2,16 @@ import express, { Application } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import 'reflect-metadata';
-import { auth, inventory, product, purchaseOrder, salesOrder, supplier, user, warehouse } from './api';
+import {
+  auth,
+  inventory,
+  product,
+  purchaseOrder,
+  salesOrder,
+  supplier,
+  user,
+  warehouse,
+} from './api';
 import { ErrorController } from './controllers/error.controller';
 import { AppError, logger } from './utils';
 import { configService } from './configs';
@@ -40,8 +49,9 @@ class App {
   }
 
   private registerRoutingControllers() {
-    [warehouse, product, user, salesOrder, auth, supplier, inventory, purchaseOrder].forEach((route) =>
-      this.app.use(this.configService.API_VERSION, route));
+    [warehouse, product, user, salesOrder, auth, supplier, inventory, purchaseOrder].forEach(
+      (route) => this.app.use(this.configService.API_VERSION, route),
+    );
   }
 
   private async registerServer() {
@@ -59,7 +69,9 @@ class App {
 
   private registerLogger() {
     this.app.use((req, _, next) => {
-      this.logger = logger.info(`Request body: ${JSON.stringify(req.body)}`);
+      this.logger = logger.info(
+        `Request body: ${JSON.stringify(req.body)}\n Request param: ${JSON.stringify(req.params)}`,
+      );
       next();
     });
   }
