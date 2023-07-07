@@ -4,3 +4,4 @@ import { getIncrementValue } from './auto-increment';
 import { logger } from './logger';
 
 export { jwtGenerator, AppError, logger, getIncrementValue };
+export * from './builder';

@@ -1,7 +1,11 @@
 {
   "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "prettier"
+  ],
   "extends": [
-    "plugin:@typescript-eslint/recommended"
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
   ],
   "parserOptions": {
     "ecmaVersion": 2018,
@@ -11,6 +15,12 @@
     "semi": "warn",
     "space-before-blocks": "warn",
     "space-in-parens": "warn",
-    "space-infix-ops": "warn"
+    "space-infix-ops": "warn",
+    "max-len": [
+      "error",
+      {
+        "code": 100
+      }
+    ]
   }
 }

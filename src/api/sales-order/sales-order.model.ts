@@ -1,9 +1,9 @@
 import mongoose, { Document, Schema, Types } from 'mongoose';
-
 import { ISalesOrderProduct } from './interfaces/sales-order.interface';
 import { SOStatus } from '../../constants/enums';
+import { BaseDoc } from '../../interfaces/base.interface';
 
-export interface SalesOrderDoc extends Document {
+export interface SalesOrderDoc extends Document, BaseDoc {
   SONumber: number;
   status: string;
   products: ISalesOrderProduct[];
@@ -44,6 +44,14 @@ const schema = new Schema<SalesOrderDoc>({
     type: Schema.Types.ObjectId,
     get: (v: Types.ObjectId) => v.toString(),
     required: [true, 'sales order must belong to a warehouse'],
+  },
+  createdAt: {
+    type: Date,
+    default: new Date(),
+  },
+  updatedAt: {
+    type: Date,
+    default: new Date(),
   },
 });
 

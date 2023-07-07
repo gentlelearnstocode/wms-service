@@ -26,8 +26,14 @@ export const logger = winston.createLogger({
   level: configService.LOG_LEVEL,
   transports: [
     new Console({ format: loggerConsoleFormat }),
-    new File({ filename: 'src/logs/info.log', format: combine(infoFilter(), json(), timestamp()) }),
-    new File({ filename: 'src/logs/error.log', format: combine(errorFilter(), json(), timestamp()) }),
+    new File({
+      filename: 'src/logs/info.log',
+      format: combine(infoFilter(), json(), timestamp()),
+    }),
+    new File({
+      filename: 'src/logs/error.log',
+      format: combine(errorFilter(), json(), timestamp()),
+    }),
   ],
   exceptionHandlers: new File({ filename: 'src/logs/exception.log' }),
   rejectionHandlers: new File({ filename: 'src/logs/rejection.log' }),

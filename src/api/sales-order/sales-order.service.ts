@@ -1,14 +1,15 @@
 import { salesOrderRepository, SalesOrderRepository } from './sales-order.repository';
-import { getIncrementValue } from '../../utils';
+import { AppError, getIncrementValue } from '../../utils';
 import { inventoryService, InventoryService } from '../inventory/inventory.service';
+import { productService, ProductService } from '../product/product.service';
 import mongoose from 'mongoose';
-import { ISalesOrder } from './interfaces/sales-order.interface';
+import { ISalesOrder, ISalesOrderProduct } from './interfaces/sales-order.interface';
 
 export class SalesOrderService {
   private readonly inventoryService: InventoryService = inventoryService;
+  private readonly productService: ProductService = productService;
 
-  constructor(private readonly salesOrderRepository: SalesOrderRepository) {
-  }
+  constructor(private readonly salesOrderRepository: SalesOrderRepository) {}
 
   public async findAll() {
     return this.salesOrderRepository.findAll();
@@ -27,17 +28,21 @@ export class SalesOrderService {
         SONumber,
       };
     }
+    const validProducts = await Promise.all(
+      data.products.map((i: ISalesOrderProduct) => this.productService.findById(i.id)),
+    );
+    if (validProducts.includes(null)) throw new AppError('Bad request', 400);
     const salesOrder = this.salesOrderRepository.upsert(data);
-    await Promise.all(data.products.map((product) => this.adjustInventory(product.id, product.orderQuantity)));
+    await Promise.all(
+      data.products.map((product: ISalesOrderProduct) =>
+        this.inventoryService.adjustOutgoingQuantity(product.id, product.orderQuantity),
+      ),
+    );
     return salesOrder;
   }
 
   public async delete(id: string) {
     return this.salesOrderRepository.delete(id);
-  }
-
-  private async adjustInventory(productId: string, quantity: number) {
-    await this.inventoryService.findOneAndUpdate({ productId }, { $inc: { 'outgoingQuantity': quantity } });
   }
 }
 

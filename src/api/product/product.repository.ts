@@ -1,10 +1,10 @@
 import ProductModel from './product.model';
-import { RepositoryAbstract } from '../../abstracts';
 import { IProductQuery } from '../../interfaces/query.interfaces';
+import { buildAggregationPipelines } from '../../utils';
 
-export class ProductRepository extends RepositoryAbstract {
+export class ProductRepository {
   public async findAll(query: IProductQuery) {
-    const products = await ProductModel.aggregate(this.buildAggregationPipelines(query));
+    const products = await ProductModel.aggregate(buildAggregationPipelines(query));
     return products;
   }
 

@@ -1,10 +1,10 @@
 import InventoryModel from './inventory.model';
-import { RepositoryAbstract } from '../../abstracts';
 import { IInventory } from './interfaces/inventory.interface';
+import { buildLookupPipeline } from '../../utils';
 
-export class InventoryRepository extends RepositoryAbstract {
+export class InventoryRepository {
   public async findAll() {
-    const lookup = this.buildLookupPipeline('products', 'productId', '_id', 'product');
+    const lookup = buildLookupPipeline('products', 'productId', '_id', 'product');
     return InventoryModel.aggregate([lookup]);
   }
 
@@ -25,8 +25,10 @@ export class InventoryRepository extends RepositoryAbstract {
   }
 
   public async findOneAndUpdate(filter: any, data: any) {
-    console.log('inventory filter', filter);
-    return InventoryModel.findOneAndUpdate(filter, data, { upsert: true, new: true });
+    return InventoryModel.findOneAndUpdate(filter, data, {
+      upsert: true,
+      new: true,
+    });
   }
 }
 

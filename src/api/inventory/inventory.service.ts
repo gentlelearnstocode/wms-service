@@ -6,8 +6,7 @@ import { AppError } from '../../utils';
 export class InventoryService {
   private readonly productService: ProductService = productService;
 
-  constructor(private readonly inventoryRepository: InventoryRepository) {
-  }
+  constructor(private readonly inventoryRepository: InventoryRepository) {}
 
   public async findAll() {
     return this.inventoryRepository.findAll();
@@ -35,8 +34,23 @@ export class InventoryService {
     return this.inventoryRepository.findByProductId(productId);
   }
 
-  public async findOneAndUpdate(filter: any, data: any) {
-    return this.inventoryRepository.findOneAndUpdate(filter, data);
+  public async adjustOutgoingQuantity(productId: string, quantity: number) {
+    const product = await this.productService.findById(productId);
+    if (product) {
+      await this.inventoryRepository.findOneAndUpdate(
+        { productId },
+        { $inc: { outgoingQuantity: quantity } },
+      );
+    }
+  }
+
+  public async adjustIncomingQuantity(productId: string, quantity: number) {
+    if (await this.productService.findById(productId)) {
+      await this.inventoryRepository.findOneAndUpdate(
+        { productId },
+        { $inc: { incomingQuantity: quantity } },
+      );
+    }
   }
 }
 
