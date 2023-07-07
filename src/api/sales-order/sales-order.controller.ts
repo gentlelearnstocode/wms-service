@@ -60,7 +60,7 @@ export const deleteSalesOrder = async (req: Request, res: Response, next: NextFu
 export const issueSalesOrder = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const issued = await salesOrderService.issueSalesOrder(req.params.id);
-    res.status(204).json({
+    res.status(200).json({
       status: STATUS.SUCCESS,
       data: issued,
     });

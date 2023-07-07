@@ -9,7 +9,7 @@ export class SalesOrderRepository {
     return SalesOrderModel.aggregate([lookup1], [lookup2]);
   }
 
-  public async findById(id: string) {
+  public async findById(id: string): Promise<ISalesOrder | null> {
     return SalesOrderModel.findById(id);
   }
 
