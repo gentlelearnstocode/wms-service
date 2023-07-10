@@ -1,12 +1,23 @@
-import SalesOrderModel from './sales-order.model';
+import { IQuery } from '../../interfaces/query.interfaces';
 import { ISalesOrder } from './interfaces/sales-order.interface';
-import { buildLookupPipeline } from '../../utils';
+import SalesOrderModel from './sales-order.model';
 
 export class SalesOrderRepository {
-  public async findAll(): Promise<ISalesOrder[]> {
-    const lookup1 = buildLookupPipeline('products', 'products.id', '_id', 'productDetail');
-    const lookup2 = buildLookupPipeline('warehouses', 'warehouseId', '_id', 'warehouseDetail');
-    return SalesOrderModel.aggregate([lookup1], [lookup2]);
+  public async findAll(query: IQuery): Promise<ISalesOrder[]> {
+    return SalesOrderModel.find({}, null, {
+      skip: query.offset,
+      limit: query.limit,
+      populate: [
+        {
+          path: 'warehouse',
+          select: '-__v',
+        },
+        {
+          path: 'products.product',
+          select: '-__v',
+        },
+      ],
+    });
   }
 
   public async findById(id: string): Promise<ISalesOrder | null> {

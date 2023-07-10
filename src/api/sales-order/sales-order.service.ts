@@ -6,6 +6,7 @@ import { productService, ProductService } from '../product/product.service';
 import { ISalesOrder, ISalesOrderProduct } from './interfaces/sales-order.interface';
 import { SalesOrderEntity } from './sales-order.entity';
 import { salesOrderRepository, SalesOrderRepository } from './sales-order.repository';
+import { IQuery } from '../../interfaces/query.interfaces';
 
 export class SalesOrderService {
   private readonly inventoryService: InventoryService = inventoryService;
@@ -13,8 +14,8 @@ export class SalesOrderService {
 
   constructor(private readonly salesOrderRepository: SalesOrderRepository) {}
 
-  public async findAll() {
-    return this.salesOrderRepository.findAll();
+  public async findAll(query: IQuery) {
+    return this.salesOrderRepository.findAll(query);
   }
 
   public async findById(id: string) {
@@ -35,7 +36,7 @@ export class SalesOrderService {
     const salesOrder = this.salesOrderRepository.upsert(entity);
     await Promise.all(
       entity.products.map((product: ISalesOrderProduct) =>
-        this.inventoryService.adjustOutgoingQuantity(product.id, product.orderQuantity),
+        this.inventoryService.adjustOutgoingQuantity(product.product, product.orderQuantity),
       ),
     );
     return salesOrder;
@@ -48,8 +49,8 @@ export class SalesOrderService {
       await this.productService.validateProducts(entity.products);
       await Promise.all(
         entity.products.map((product: ISalesOrderProduct) => {
-          this.inventoryService.adjustStockQuantity(product.id, -product.orderQuantity),
-            this.inventoryService.adjustOutgoingQuantity(product.id, -product.orderQuantity);
+          this.inventoryService.adjustStockQuantity(product.product, -product.orderQuantity),
+            this.inventoryService.adjustOutgoingQuantity(product.product, -product.orderQuantity);
         }),
       );
       await this.salesOrderRepository.findByIdAndUpdate(entity);

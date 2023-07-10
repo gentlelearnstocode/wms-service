@@ -1,16 +1,15 @@
-import { IWarehouseQuery } from '../../interfaces/query.interfaces';
+import { IQuery } from '../../interfaces/query.interfaces';
 import { IWarehouse } from './interfaces/warehouse.interfaces';
 import { warehouseRepository, WarehouseRepository } from './warehouse.repository';
 
 export class WarehouseService {
-  constructor(private readonly warehouseRepository: WarehouseRepository) {
-  }
+  constructor(private readonly warehouseRepository: WarehouseRepository) {}
 
   public async findById(id: string) {
     return this.warehouseRepository.findById(id);
   }
 
-  public async findAll(query: IWarehouseQuery) {
+  public async findAll(query: IQuery) {
     return this.warehouseRepository.findAll(query);
   }
 
@@ -24,4 +23,3 @@ export class WarehouseService {
 }
 
 export const warehouseService = new WarehouseService(warehouseRepository);
-

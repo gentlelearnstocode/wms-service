@@ -7,7 +7,11 @@ export class UserRepository {
   }
 
   public async findAll() {
-    return UserModel.find();
+    return UserModel.find({}, null, {
+      populate: {
+        path: 'warehouses.warehouseInfo',
+      },
+    });
   }
 
   public async findByEmail(email: string) {

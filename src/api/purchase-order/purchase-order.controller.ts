@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import STATUS from '../../constants/Status';
 import { purchaseOrderService } from './purchase-order.service';
+import { getPaginationFromQuery } from '../../utils/get-pagination';
 
 export const upsert = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -18,7 +19,7 @@ export const upsert = async (req: Request, res: Response, next: NextFunction) =>
 
 export const getAllPurchaseOrders = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const purchaseOrders = await purchaseOrderService.findAll();
+    const purchaseOrders = await purchaseOrderService.findAll(getPaginationFromQuery(req.query));
     res.status(200).json({
       status: STATUS.SUCCESS,
       data: {

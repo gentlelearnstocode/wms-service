@@ -3,6 +3,7 @@ import { NextFunction, Request, Response } from 'express';
 import STATUS from '../../constants/Status';
 import { warehouseService } from './warehouse.service';
 import { logger } from '../../utils';
+import { getPaginationFromQuery } from '../../utils/get-pagination';
 
 export const upsert = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -18,8 +19,7 @@ export const upsert = async (req: Request, res: Response, next: NextFunction) =>
 
 export const getAllWarehouses = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const warehouses = await warehouseService.findAll(req.query);
-    logger.info(`body: ${JSON.stringify(req.body)} | query: ${JSON.stringify(req.query)}`);
+    const warehouses = await warehouseService.findAll(getPaginationFromQuery(req.query));
     res.status(200).json({
       status: STATUS.SUCCESS,
       data: {

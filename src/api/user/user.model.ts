@@ -5,8 +5,12 @@ interface UserDoc extends Document {
   email: string;
   role: string;
   password: string;
-  warehouses: Types.ObjectId[];
+  warehouses: WarehouseDoc[];
   createdAt: Date;
+}
+
+interface WarehouseDoc {
+  warehouseInfo: string;
 }
 
 const schema = new Schema<UserDoc>({
@@ -35,9 +39,9 @@ const schema = new Schema<UserDoc>({
   },
   warehouses: [
     {
-      warehouseId: {
+      warehouseInfo: {
         type: Schema.Types.ObjectId,
-        get: (v: mongoose.ObjectId) => v.toString(),
+        ref: 'Warehouse',
         require: [true, 'A user must belong to at least one warehouse'],
       },
       _id: false,
@@ -48,7 +52,6 @@ const schema = new Schema<UserDoc>({
     default: Date.now(),
   },
 });
-
 
 const UserModel = mongoose.model<UserDoc>('User', schema);
 

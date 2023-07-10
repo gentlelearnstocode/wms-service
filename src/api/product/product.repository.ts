@@ -1,10 +1,9 @@
 import ProductModel from './product.model';
-import { IProductQuery } from '../../interfaces/query.interfaces';
-import { buildAggregationPipelines } from '../../utils';
+import { IQuery } from '../../interfaces/query.interfaces';
 
 export class ProductRepository {
-  public async findAll(query: IProductQuery) {
-    const products = await ProductModel.aggregate(buildAggregationPipelines(query));
+  public async findAll(query: IQuery) {
+    const products = await ProductModel.find().skip(query.offset).limit(query.limit);
     return products;
   }
 

@@ -1,12 +1,23 @@
-import { buildLookupPipeline } from '../../utils';
+import { IQuery } from '../../interfaces/query.interfaces';
 import { IPurchaseOrder } from './interfaces/purchase-order.interface';
 import PurchaseOrderModel from './purchase-order.model';
 
 export class PurchaseOrderRepository {
-  public async findAll(): Promise<IPurchaseOrder[]> {
-    const lookup1 = buildLookupPipeline('products', 'products.id', '_id', 'productDetail');
-    const lookup2 = buildLookupPipeline('warehouses', 'warehouseId', '_id', 'warehouseDetail');
-    return PurchaseOrderModel.aggregate([lookup1], [lookup2]);
+  public async findAll(query: IQuery): Promise<IPurchaseOrder[]> {
+    return PurchaseOrderModel.find({}, null, {
+      skip: query.offset,
+      limit: query.limit,
+      populate: [
+        {
+          path: 'products.product',
+          select: '-__v',
+        },
+        {
+          path: 'warehouse',
+          select: '-__v',
+        },
+      ],
+    });
   }
 
   public async findById(id: string): Promise<IPurchaseOrder | null> {

@@ -9,7 +9,7 @@ export interface ProductDoc extends Document {
   suppliers: Types.ObjectId[];
 }
 
-const schema = new Schema<ProductDoc>({
+export const productSchema = new Schema<ProductDoc>({
   name: {
     type: String,
     required: [true, 'Product must have a name'],
@@ -33,8 +33,7 @@ const schema = new Schema<ProductDoc>({
   imageUrl: {
     type: String,
     required: true,
-    default:
-      'https://www.ikea.com/sg/en/images/products/ikea-365-ihopparlig-wooden-chopping-board__0732009_PE729202_S5.JPG?f=s',
+    default: '',
   },
   suppliers: [
     {
@@ -45,6 +44,6 @@ const schema = new Schema<ProductDoc>({
   ],
 });
 
-const ProductModel = mongoose.model<ProductDoc>('Product', schema);
+const ProductModel = mongoose.model<ProductDoc>('Product', productSchema);
 
 export default ProductModel;

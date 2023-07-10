@@ -1,6 +1,11 @@
-export const buildLookupPipeline = (from: string, localField: string, foreignField: string, as: string) => {
+export const buildLookupPipeline = (
+  from: string,
+  localField: string,
+  foreignField: string,
+  as: string,
+) => {
   return {
-    '$lookup': {
+    $lookup: {
       from,
       localField,
       foreignField,

@@ -2,7 +2,7 @@ export interface ISalesOrder {
   _id: string;
   products: ISalesOrderProduct[];
   status: string;
-  warehouseId: string;
+  warehouse: string;
   SONumber: number;
   createdAt?: string;
   createdBy?: string;
@@ -12,6 +12,6 @@ export interface ISalesOrder {
 }
 
 export interface ISalesOrderProduct {
-  id: string;
+  product: string;
   orderQuantity: number;
 }

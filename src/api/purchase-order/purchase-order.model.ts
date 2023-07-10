@@ -7,7 +7,7 @@ export interface PurchaseOrderDoc extends Document, BaseDoc {
   PONumber: number;
   status: string;
   products: IPurchaseOrderProduct[];
-  warehouseId: Schema.Types.ObjectId;
+  warehouse: Schema.Types.ObjectId;
   supplier: Schema.Types.ObjectId;
   receivedAt?: Schema.Types.Date;
   totalOrderQuantity?: Schema.Types.ObjectId;
@@ -20,12 +20,10 @@ const schema = new Schema<PurchaseOrderDoc>({
   },
   products: [
     {
-      id: {
+      product: {
         type: Schema.Types.ObjectId,
-        get: (v: Types.ObjectId) => v?.toString(),
-      },
-      name: {
-        type: String,
+        ref: 'Product',
+        required: [true, 'productInfo field must be provided'],
       },
       orderQuantity: {
         type: Number,
@@ -43,10 +41,11 @@ const schema = new Schema<PurchaseOrderDoc>({
     default: POStatus.PENDING,
     required: [true, 'Sales order must have a status'],
   },
-  warehouseId: {
+  warehouse: {
     type: Schema.Types.ObjectId,
     get: (v: Types.ObjectId) => v.toString(),
     required: [true, 'sales order must belong to a warehouse'],
+    ref: 'Warehouse',
   },
   createdAt: {
     type: Schema.Types.Date,

@@ -3,6 +3,7 @@ import { NextFunction, Request, Response } from 'express';
 import { AppError } from '../../utils';
 import STATUS from '../../constants/Status';
 import { productService } from './product.service';
+import { getPaginationFromQuery } from '../../utils/get-pagination';
 
 export const createProduct = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -20,7 +21,7 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
 
 export const getAllProducts = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const products = await productService.findAll(req.query);
+    const products = await productService.findAll(getPaginationFromQuery(req.query));
     res.status(200).json({
       status: STATUS.SUCCESS,
       data: {

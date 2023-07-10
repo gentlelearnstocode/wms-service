@@ -6,7 +6,7 @@ export class SalesOrderEntity implements ISalesOrder {
   public SONumber: number;
   public status: string;
   public products: ISalesOrderProduct[];
-  public warehouseId: string;
+  public warehouse: string;
   public issuedAt?: string | undefined;
   public totalOrderQuantity?: number | undefined;
   public createdAt?: string | undefined;
@@ -16,7 +16,7 @@ export class SalesOrderEntity implements ISalesOrder {
     this.SONumber = data.SONumber;
     this.products = data.products;
     this.status = data.status;
-    this.warehouseId = data.warehouseId;
+    this.warehouse = data.warehouse;
     this.totalOrderQuantity = data.totalOrderQuantity;
   }
 
@@ -28,7 +28,7 @@ export class SalesOrderEntity implements ISalesOrder {
       SONumber: this.SONumber,
       products: this.products,
       status: this.status,
-      warehouseId: this.warehouseId,
+      warehouse: this.warehouse,
       createdAt: this.createdAt,
       totalOrderQuantity: this.products.reduce(
         (total, current) => (total += current.orderQuantity),
@@ -45,7 +45,7 @@ export class SalesOrderEntity implements ISalesOrder {
       SONumber: this.SONumber,
       products: this.products,
       status: this.status,
-      warehouseId: this.warehouseId,
+      warehouse: this.warehouse,
       issuedAt: this.issuedAt,
       totalOrderQuantity: this.totalOrderQuantity,
     };

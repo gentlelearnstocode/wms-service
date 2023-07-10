@@ -1,8 +1,10 @@
+import { IOrderProduct } from '../../product/interfaces/product.interface';
+
 export interface IPurchaseOrder {
   _id: string;
-  products: IPurchaseOrderProduct[];
+  products: IOrderProduct[];
   status: string;
-  warehouseId: string;
+  warehouse: string;
   PONumber: number;
   supplier?: string;
   createdAt?: string;

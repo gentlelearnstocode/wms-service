@@ -1,16 +1,14 @@
 import { IWarehouse } from './interfaces/warehouse.interfaces';
 import WarehouseModel from './warehouse.model';
-import { IWarehouseQuery } from '../../interfaces/query.interfaces';
-import { buildAggregationPipelines } from '../../utils';
+import { IQuery } from '../../interfaces/query.interfaces';
 
 export class WarehouseRepository {
   public async findById(id: string) {
     return WarehouseModel.findById(id);
   }
 
-  async findAll(query: IWarehouseQuery) {
-    const pipelines = buildAggregationPipelines(query);
-    return WarehouseModel.aggregate(pipelines);
+  async findAll(query: IQuery) {
+    return WarehouseModel.find().limit(query.limit).skip(query.offset);
   }
 
   public async delete(id: string) {

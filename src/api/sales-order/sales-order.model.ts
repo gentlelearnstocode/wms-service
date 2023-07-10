@@ -7,28 +7,23 @@ export interface SalesOrderDoc extends Document, BaseDoc {
   SONumber: number;
   status: string;
   products: ISalesOrderProduct[];
-  warehouseId: Schema.Types.ObjectId;
+  warehouse: Schema.Types.ObjectId;
   issuedAt?: Schema.Types.Date;
   totalOrderQuantity?: number;
 }
 
-const schema = new Schema<SalesOrderDoc>({
+export const salesOrderSchema = new Schema<SalesOrderDoc>({
   SONumber: {
     type: Number,
     required: true,
   },
   products: [
     {
-      id: {
+      orderQuantity: { type: Number, required: [true, 'order quantity must be valid'] },
+      product: {
         type: Schema.Types.ObjectId,
         get: (v: Types.ObjectId) => v?.toString(),
-      },
-      name: {
-        type: String,
-      },
-      orderQuantity: {
-        type: Number,
-        required: [true, 'order quantity must be valid'],
+        ref: 'Product',
       },
       _id: false,
     },
@@ -39,10 +34,11 @@ const schema = new Schema<SalesOrderDoc>({
       values: Array.from(Object.values(SOStatus)),
     },
   },
-  warehouseId: {
+  warehouse: {
     type: Schema.Types.ObjectId,
-    get: (v: Types.ObjectId) => v.toString(),
+    // get: (v: Types.ObjectId) => v.toString(),
     required: [true, 'sales order must belong to a warehouse'],
+    ref: 'Warehouse',
   },
   createdAt: {
     type: Date,
@@ -56,6 +52,6 @@ const schema = new Schema<SalesOrderDoc>({
   totalOrderQuantity: { type: Number },
 });
 
-const SalesOrderModel = mongoose.model<SalesOrderDoc>('SalesOrder', schema);
+const SalesOrderModel = mongoose.model<SalesOrderDoc>('SalesOrder', salesOrderSchema);
 
 export default SalesOrderModel;

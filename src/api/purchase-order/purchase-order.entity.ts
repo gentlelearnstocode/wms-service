@@ -1,12 +1,13 @@
 import { POStatus } from '../../constants/enums';
-import { IPurchaseOrder, IPurchaseOrderProduct } from './interfaces/purchase-order.interface';
+import { IOrderProduct } from '../product/interfaces/product.interface';
+import { IPurchaseOrder } from './interfaces/purchase-order.interface';
 
 export class PurchaseOrderEntity implements IPurchaseOrder {
   public _id: string;
   public PONumber: number;
   public status: string;
-  public products: IPurchaseOrderProduct[];
-  public warehouseId: string;
+  public products: IOrderProduct[];
+  public warehouse: string;
   public receivedAt?: string | undefined;
   public totalOrderQuantity?: number | undefined;
   public createdAt?: string | undefined;
@@ -17,7 +18,7 @@ export class PurchaseOrderEntity implements IPurchaseOrder {
     this.PONumber = data.PONumber;
     this.products = data.products;
     this.status = data.status;
-    this.warehouseId = data.warehouseId;
+    this.warehouse = data.warehouse;
     this.totalOrderQuantity = data.totalOrderQuantity;
   }
 
@@ -29,7 +30,7 @@ export class PurchaseOrderEntity implements IPurchaseOrder {
       PONumber: this.PONumber,
       products: this.products,
       status: this.status,
-      warehouseId: this.warehouseId,
+      warehouse: this.warehouse,
       createdAt: this.createdAt,
       totalOrderQuantity: this.products.reduce(
         (total, current) => (total += current.orderQuantity),
@@ -46,7 +47,7 @@ export class PurchaseOrderEntity implements IPurchaseOrder {
       PONumber: this.PONumber,
       products: this.products,
       status: this.status,
-      warehouseId: this.warehouseId,
+      warehouse: this.warehouse,
       receivedAt: this.receivedAt,
       totalOrderQuantity: this.totalOrderQuantity,
     };

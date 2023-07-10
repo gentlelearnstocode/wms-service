@@ -1,12 +1,13 @@
-import { IProductQuery } from '../../interfaces/query.interfaces';
+import { IQuery } from '../../interfaces/query.interfaces';
 import { IOrderProduct } from './interfaces/product.interface';
 import { productRepository, ProductRepository } from './product.repository';
 import { AppError } from '../../utils';
+import { ISalesOrder, ISalesOrderProduct } from '../sales-order/interfaces/sales-order.interface';
 
 export class ProductService {
   constructor(private readonly productRepository: ProductRepository) {}
 
-  public async findAll(query: IProductQuery) {
+  public async findAll(query: IQuery) {
     return this.productRepository.findAll(query);
   }
 
@@ -28,7 +29,7 @@ export class ProductService {
 
   public async validateProducts(products: IOrderProduct[]) {
     const validProducts = await Promise.all(
-      products.map((i: IOrderProduct) => this.findById(i.id)),
+      products.map((i: IOrderProduct) => this.findById(i.product)),
     );
     if (validProducts.includes(null)) throw new AppError('Bad request', 400);
   }
