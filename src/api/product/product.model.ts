@@ -1,4 +1,5 @@
 import mongoose, { Date, Document, Schema, Types } from 'mongoose';
+import { ProductTypes } from '../../constants/enums';
 
 export interface ProductDoc extends Document {
   name: string;
@@ -21,7 +22,7 @@ export const productSchema = new Schema<ProductDoc>({
   type: {
     type: String,
     enum: {
-      values: ['RAW_MATERIAL', 'WORK_IN_PROGRESS', 'SUPPLIES', 'FINISHED_GOOD'],
+      values: Array.from(Object.values(ProductTypes)),
       message: 'Product type must be valid',
     },
   },
@@ -32,14 +33,12 @@ export const productSchema = new Schema<ProductDoc>({
   },
   imageUrl: {
     type: String,
-    required: true,
     default: '',
   },
   suppliers: [
     {
       type: Schema.Types.ObjectId,
       ref: 'Supplier',
-      required: [true, 'A product must have at least one supplier'],
     },
   ],
 });

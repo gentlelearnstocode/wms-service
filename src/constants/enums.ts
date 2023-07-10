@@ -11,11 +11,17 @@ export enum UserRoles {
 
 export enum InventoryStatus {
   IN_STOCK = 'in-stock',
-  OUT_OF_STOCK = 'out-of-stock'
+  OUT_OF_STOCK = 'out-of-stock',
 }
 
 export enum POStatus {
   PENDING = 'pending',
-  RECEIVED = 'received'
+  RECEIVED = 'received',
 }
 
+export enum ProductTypes {
+  WORK_IN_PROGRESS = 'work-in-progress',
+  SUPPLIES = 'supplies',
+  FINISHED_GOOD = 'finished-goods',
+  RAW_MATERIAL = 'raw-material',
+}
