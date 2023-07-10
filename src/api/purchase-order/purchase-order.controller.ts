@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import { purchaseOrderService } from './purchase-order.service';
 import STATUS from '../../constants/Status';
+import { purchaseOrderService } from './purchase-order.service';
 
 export const upsert = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -58,7 +58,7 @@ export const deletePurchaseOrder = async (req: Request, res: Response, next: Nex
 
 export const receivePurchaseOrder = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const received = await purchaseOrderService.receivePurchaseOrder(req.params.id);
+    const received = await purchaseOrderService.receive(req.params.id);
     res.status(200).json({
       status: STATUS.SUCCESS,
       data: received,

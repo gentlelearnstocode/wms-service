@@ -1,6 +1,6 @@
-import PurchaseOrderModel from './purchase-order.model';
-import { IPurchaseOrder } from './interfaces/purchase-order.interface';
 import { buildLookupPipeline } from '../../utils';
+import { IPurchaseOrder } from './interfaces/purchase-order.interface';
+import PurchaseOrderModel from './purchase-order.model';
 
 export class PurchaseOrderRepository {
   public async findAll(): Promise<IPurchaseOrder[]> {

@@ -21,12 +21,12 @@ export class SalesOrderRepository {
     });
   }
 
-  public async delete(id: string): Promise<void> {
-    await SalesOrderModel.findByIdAndDelete(id);
+  public async delete(id: string): Promise<void | null> {
+    return SalesOrderModel.findByIdAndDelete(id);
   }
 
-  public async findByIdAndUpdate(data: ISalesOrder): Promise<void> {
-    await SalesOrderModel.findByIdAndUpdate(data._id, data, {
+  public async findByIdAndUpdate(data: ISalesOrder): Promise<void | null> {
+    return SalesOrderModel.findByIdAndUpdate(data._id, data, {
       returnDocument: 'after',
       runValidators: true,
     });

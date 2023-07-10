@@ -1,7 +1,7 @@
-import mongoose, { Document, Schema, SchemaType, Types } from 'mongoose';
-import { IPurchaseOrderProduct } from './interfaces/purchase-order.interface';
+import mongoose, { Document, Schema, Types } from 'mongoose';
 import { POStatus } from '../../constants/enums';
 import { BaseDoc } from '../../interfaces/base.interface';
+import { IPurchaseOrderProduct } from './interfaces/purchase-order.interface';
 
 export interface PurchaseOrderDoc extends Document, BaseDoc {
   PONumber: number;

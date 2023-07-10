@@ -1,6 +1,5 @@
 import { SOStatus } from '../../constants/enums';
 import { ISalesOrder, ISalesOrderProduct } from './interfaces/sales-order.interface';
-import { SalesOrderDoc } from './sales-order.model';
 
 export class SalesOrderEntity implements ISalesOrder {
   public _id: string;

@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-
-import { salesOrderService } from './sales-order.service';
 import STATUS from '../../constants/Status';
+import { salesOrderService } from './sales-order.service';
 
 export const upsert = async (req: Request, res: Response, next: NextFunction) => {
   try {
