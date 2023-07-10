@@ -1,12 +1,11 @@
-import { purchaseOrderRepository, PurchaseOrderRepository } from './purchase-order.repository';
-import { inventoryService, InventoryService } from '../inventory/inventory.service';
-import { AppError, getIncrementValue } from '../../utils';
-import { IPurchaseOrder, IPurchaseOrderProduct } from './interfaces/purchase-order.interface';
 import mongoose from 'mongoose';
-import { ISalesOrderProduct } from '../sales-order/interfaces/sales-order.interface';
-import { productService, ProductService } from '../product/product.service';
-import { PurchaseOrderEntity } from './purchase-order.entity';
 import { POStatus } from '../../constants/enums';
+import { AppError, getIncrementValue } from '../../utils';
+import { inventoryService, InventoryService } from '../inventory/inventory.service';
+import { productService, ProductService } from '../product/product.service';
+import { IPurchaseOrder, IPurchaseOrderProduct } from './interfaces/purchase-order.interface';
+import { PurchaseOrderEntity } from './purchase-order.entity';
+import { purchaseOrderRepository, PurchaseOrderRepository } from './purchase-order.repository';
 
 export class PurchaseOrderService {
   private readonly inventoryService: InventoryService = inventoryService;
@@ -42,7 +41,7 @@ export class PurchaseOrderService {
     return purchaseOrder;
   }
 
-  public async receivePurchaseOrder(id: string) {
+  public async receive(id: string) {
     const purchaseOrder = await purchaseOrderRepository.findById(id);
     if (purchaseOrder && purchaseOrder.status === POStatus.PENDING) {
       const entity = new PurchaseOrderEntity(purchaseOrder).receive();

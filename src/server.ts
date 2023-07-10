@@ -52,6 +52,9 @@ class App {
     [warehouse, product, user, salesOrder, auth, supplier, inventory, purchaseOrder].forEach(
       (route) => this.app.use(this.configService.API_VERSION, route),
     );
+    // this.app.get('/test', (req, res, next) => {
+    //   res.send('testing');
+    // });
   }
 
   private async registerServer() {
